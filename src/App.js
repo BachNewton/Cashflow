@@ -113,15 +113,109 @@ export default class App extends React.Component {
         );
     }
 
+    renderRealEstate() {
+        return (
+            <Table striped bordered hover variant="dark">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Cost</th>
+                        <th>Mortgage</th>
+                        <th>Cash Flow</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </Table>
+        );
+    }
+
+    renderStocksMutalsCDs() {
+        return (
+            <Table striped bordered hover variant="dark">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Income / Splits</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </Table>
+        );
+    }
+
+    renderBusinesses() {
+        return (
+            <Table striped bordered hover variant="dark">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Income</th>
+                        <th>Liability</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </Table>
+        );
+    }
+
+    renderLiabilities() {
+        return (
+            <Table striped bordered hover variant="dark">
+                <tbody>
+                    <tr>
+                        <td>Home Mortgage</td>
+                        <td className="money">$32.00</td>
+                    </tr>
+                    <tr>
+                        <td>School Loans</td>
+                        <td className="money">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td>Car Loans</td>
+                        <td className="money">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td>Credit Cards</td>
+                        <td className="money">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td>Retail Debt</td>
+                        <td className="money">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td>Bank Loan</td>
+                        <td className="money">$0.00</td>
+                    </tr>
+                </tbody>
+            </Table >
+        );
+    }
+
     renderBody() {
         return (
             <Container fluid>
-                <Tabs defaultActiveKey="income">
+                <Tabs defaultActiveKey="income" variant="tabs">
                     <Tab eventKey="income" title="Income">
                         {this.renderIncome()}
                     </Tab>
                     <Tab eventKey="expenses" title="Expenses">
                         {this.renderExpenses()}
+                    </Tab>
+                    <Tab eventKey="realEstate" title="Real Estate">
+                        {this.renderRealEstate()}
+                    </Tab>
+                    <Tab eventKey="stocksMutalsCDs" title="Stocks / Mutal's / CDs">
+                        {this.renderStocksMutalsCDs()}
+                    </Tab>
+                    <Tab eventKey="businesses" title="Businesses">
+                        {this.renderBusinesses()}
+                    </Tab>
+                    <Tab eventKey="liabilities" title="Liabilities">
+                        {this.renderLiabilities()}
                     </Tab>
                 </Tabs>
             </Container>
