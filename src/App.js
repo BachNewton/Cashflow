@@ -5,6 +5,7 @@ import Table from 'react-bootstrap/Table';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import './App.css';
+import Profession from './Profession';
 
 export default class App extends React.Component {
     renderHeader() {
@@ -223,6 +224,8 @@ export default class App extends React.Component {
     }
 
     render() {
+        console.log(Profession.ENGINEER);
+
         return (
             <>
                 {this.renderHeader()}
