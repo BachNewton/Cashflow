@@ -1,16 +1,31 @@
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 import Table from 'react-bootstrap/Table';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import './App.css';
-import Profession from './Profession';
+import Professions from './Professions';
 
 export default class App extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            hash: ''
+        };
+    }
+
+    componentDidMount() {
+        window.addEventListener('hashchange', () => {
+            this.setState({ hash: window.location.hash });
+        });
+    }
+
     renderHeader() {
         return (
-            <Navbar bg="dark" variant="dark" className="mb-1">
+            <Navbar bg="dark" variant="dark" className="mb-1" expand="sm">
                 <Navbar.Brand>
                     <img
                         alt="Cashflow Icon"
@@ -18,8 +33,15 @@ export default class App extends React.Component {
                         width="30"
                         className="d-inline-block align-top"
                     />{' '}
-                    Cashflow Player Sheet
+                    Cashflow
                 </Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav>
+                        <Nav.Link href="#playerSheet">Player Sheet</Nav.Link>
+                        <Nav.Link href="#professions">Professions</Nav.Link>
+                    </Nav>
+                </Navbar.Collapse>
             </Navbar>
         );
     }
@@ -197,8 +219,8 @@ export default class App extends React.Component {
     }
 
     renderBody() {
-        return (
-            <Container fluid>
+        if (this.state.hash === '' || this.state.hash === '#playerSheet') {
+            return (
                 <Tabs defaultActiveKey="income" variant="tabs">
                     <Tab eventKey="income" title="Income">
                         {this.renderIncome()}
@@ -219,17 +241,20 @@ export default class App extends React.Component {
                         {this.renderLiabilities()}
                     </Tab>
                 </Tabs>
-            </Container>
-        );
+            );
+        } else {
+            return <Professions />;
+        }
     }
 
     render() {
-        console.log(Profession.ENGINEER);
-
         return (
             <>
                 {this.renderHeader()}
-                {this.renderBody()}
+
+                <Container fluid>
+                    {this.renderBody()}
+                </Container>
             </>
         );
     }
