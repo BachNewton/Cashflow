@@ -11,6 +11,12 @@ export default class PlayerSheet extends React.Component {
     constructor(props) {
         super(props);
 
+        this.handlePaycheck = this.handlePaycheck.bind(this);
+
+        this.state = {
+            tab: 'info'
+        };
+
         this.getProfession = props.getProfession || function () { };
     }
 
@@ -247,11 +253,16 @@ export default class PlayerSheet extends React.Component {
         );
     }
 
+    handlePaycheck() {
+        var profession = this.getProfession();
+        profession.savings += this.getCashflow(profession);
+        this.setState({ tab: 'info' });
+    }
+
     renderActions() {
         return (
             <Jumbotron>
-                <WarningButton />
-                <WarningButton />
+                <WarningButton buttonText="Paycheck" title="Payday!" details="Are you sure you want to collect your paycheck?" callback={this.handlePaycheck} />
                 <WarningButton />
                 <WarningButton />
                 <WarningButton />
@@ -260,11 +271,15 @@ export default class PlayerSheet extends React.Component {
         );
     }
 
+    handleChangeTab(key) {
+        this.setState({ tab: key });
+    }
+
     render() {
         var profession = this.getProfession() || new Profession();
 
         return (
-            <Tabs fill defaultActiveKey="info" variant="tabs">
+            <Tabs fill variant="tabs" activeKey={this.state.tab} onSelect={(k) => this.handleChangeTab(k)}>
                 <Tab eventKey="info" title="Info">
                     {this.renderInfo(profession)}
                 </Tab>
