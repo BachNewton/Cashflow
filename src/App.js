@@ -13,7 +13,7 @@ export default class App extends React.Component {
         super(props);
 
         this.state = {
-            hash: ''
+            hash: window.location.hash
         };
     }
 
@@ -21,6 +21,10 @@ export default class App extends React.Component {
         window.addEventListener('hashchange', () => {
             this.setState({ hash: window.location.hash });
         });
+    }
+
+    handleNewProfession(profession) {
+        console.log(profession);
     }
 
     renderHeader() {
@@ -243,7 +247,7 @@ export default class App extends React.Component {
                 </Tabs>
             );
         } else {
-            return <Professions />;
+            return <Professions handleNewProfession={this.handleNewProfession} />;
         }
     }
 
