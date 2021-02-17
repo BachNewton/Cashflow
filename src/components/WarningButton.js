@@ -17,6 +17,7 @@ export default class WarningButton extends React.Component {
         this.buttonText = props.buttonText || 'Button Text';
         this.title = props.title || 'Title';
         this.details = props.details || 'Details';
+        this.form = props.form || null;
         this.callback = props.callback || function () { };
     }
 
@@ -44,6 +45,7 @@ export default class WarningButton extends React.Component {
                     </Modal.Header>
                     <Modal.Body>
                         <p>{this.details}</p>
+                        {this.form}
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={this.handleClose} variant="danger">No</Button>
