@@ -17,7 +17,7 @@ export default class Profession {
     static ENGINEER = new Profession({
         title: 'Engineer',
         salary: 4900,
-        savings: 400,
+        savings: 4000,
         perChildExpense: 250,
         expenses: new Expenses({
             tax: 1050,

@@ -7,6 +7,7 @@ import Jumbotron from 'react-bootstrap/Jumbotron';
 import './PlayerSheet.css';
 import WarningButton from './WarningButton';
 import Form from 'react-bootstrap/Form';
+import LiabilitiesTable from './LiabilitiesTable';
 
 export default class PlayerSheet extends React.Component {
     constructor(props) {
@@ -224,39 +225,6 @@ export default class PlayerSheet extends React.Component {
         );
     }
 
-    renderLiabilities() {
-        return (
-            <Table striped bordered hover variant="dark">
-                <tbody>
-                    <tr>
-                        <td>Home Mortgage</td>
-                        <td className="money">$ TODO</td>
-                    </tr>
-                    <tr>
-                        <td>School Loans</td>
-                        <td className="money">$ TODO</td>
-                    </tr>
-                    <tr>
-                        <td>Car Loans</td>
-                        <td className="money">$ TODO</td>
-                    </tr>
-                    <tr>
-                        <td>Credit Cards</td>
-                        <td className="money">$ TODO</td>
-                    </tr>
-                    <tr>
-                        <td>Retail Debt</td>
-                        <td className="money">$ TODO</td>
-                    </tr>
-                    <tr>
-                        <td>Bank Loan</td>
-                        <td className="money">$ TODO</td>
-                    </tr>
-                </tbody>
-            </Table >
-        );
-    }
-
     handlePaycheck() {
         var profession = this.getProfession();
         profession.savings += this.getCashflow(profession);
@@ -264,7 +232,7 @@ export default class PlayerSheet extends React.Component {
     }
 
     handleDoodad() {
-        if (this.doodadForm === '') return;
+        if (this.doodadForm === '' || isNaN(this.doodadForm)) return;
 
         var profession = this.getProfession();
         profession.savings -= parseInt(this.doodadForm);
@@ -313,7 +281,7 @@ export default class PlayerSheet extends React.Component {
                     {this.renderExpenses(profession)}
                 </Tab>
                 <Tab eventKey="liabilities" title="Liabilities">
-                    {this.renderLiabilities()}
+                    <LiabilitiesTable getProfession={this.getProfession} />
                 </Tab>
                 <Tab eventKey="realEstate" title="Real Estate">
                     {this.renderRealEstate()}
