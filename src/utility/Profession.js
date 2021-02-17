@@ -6,6 +6,12 @@ import nurseImage from '../images/nurse.png';
 import pilotImage from '../images/pilot.png';
 import Expenses from './Expenses';
 import Liabilities from './Liabilities';
+// eslint-disable-next-line
+import RealEstate from './RealEstate';
+// eslint-disable-next-line
+import Business from './Business';
+// eslint-disable-next-line
+import Stock from './Stock';
 
 export default class Profession {
     static ENGINEER = new Profession({
@@ -148,6 +154,13 @@ export default class Profession {
         this.liabilities = data.liabilities || new Liabilities();
         this.image = data.image || professionImage;
         this.children = data.children || 0;
+
+        /** @type {Array<RealEstate>} */
+        this.realEstate = [];
+        /** @type {Array<Business>} */
+        this.businesses = [];
+        /** @type {Array<Stock>} */
+        this.stocks = [];
     }
 
     clone() {

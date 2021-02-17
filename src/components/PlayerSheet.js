@@ -14,8 +14,20 @@ export default class PlayerSheet extends React.Component {
         this.getProfession = props.getProfession || function () { };
     }
 
+    getTotalStockIncome(/** @type {Profession} */ profession) {
+        return profession.stocks.reduce((sum, stock) => sum + (stock.income * stock.shares), 0);
+    }
+
+    getTotalBusinessIncome(/** @type {Profession} */ profession) {
+        return profession.businesses.reduce((sum, business) => sum + business.income, 0);
+    }
+
+    getTotalRealEstateIncome(/** @type {Profession} */ profession) {
+        return profession.realEstate.reduce((sum, realEstate) => sum + realEstate.cashflow, 0);
+    }
+
     getTotalIncome(/** @type {Profession} */ profession) {
-        // return profession.
+        return profession.salary + this.getTotalBusinessIncome(profession) + this.getTotalRealEstateIncome(profession) + this.getTotalStockIncome(profession);
     }
 
     getChildExpenses(/** @type {Profession} */ profession) {
@@ -26,6 +38,10 @@ export default class PlayerSheet extends React.Component {
         return profession.expenses.tax + profession.expenses.housing + profession.expenses.car + profession.expenses.creditCard + profession.expenses.retail + profession.expenses.other + this.getChildExpenses(profession);
     }
 
+    getCashflow(/** @type {Profession} */ profession) {
+        return this.getTotalIncome(profession) - this.getTotalExpenses(profession);
+    }
+
     renderInfo(/** @type {Profession} */ profession) {
         return (
             <Jumbotron>
@@ -34,7 +50,7 @@ export default class PlayerSheet extends React.Component {
                     <tbody>
                         <tr>
                             <td>Cashflow</td>
-                            <td className="money">$ TODO</td>
+                            <td className="money">${this.getCashflow(profession).toLocaleString()}</td>
                         </tr>
                         <tr>
                             <td>Savings</td>
@@ -66,11 +82,15 @@ export default class PlayerSheet extends React.Component {
                         </tr>
                         <tr>
                             <td>Dividends / Interest Income</td>
-                            <td className="money">$35,863</td>
+                            <td className="money">${this.getTotalStockIncome(profession).toLocaleString()}</td>
                         </tr>
                         <tr>
                             <td>Real Estate Total</td>
-                            <td className="money">$0.00</td>
+                            <td className="money">${this.getTotalRealEstateIncome(profession).toLocaleString()}</td>
+                        </tr>
+                        <tr>
+                            <td>Business Total</td>
+                            <td className="money">${this.getTotalBusinessIncome(profession).toLocaleString()}</td>
                         </tr>
                     </tbody>
                 </Table >
@@ -78,11 +98,11 @@ export default class PlayerSheet extends React.Component {
                     <tbody>
                         <tr>
                             <td>Passive Income</td>
-                            <td className="money">$0.00</td>
+                            <td className="money">$ TODO</td>
                         </tr>
                         <tr>
                             <td>Total Income</td>
-                            <td className="money">$0.00</td>
+                            <td className="money">${this.getTotalIncome(profession).toLocaleString()}</td>
                         </tr>
                     </tbody>
                 </Table >
@@ -129,7 +149,7 @@ export default class PlayerSheet extends React.Component {
                         </tr>
                         <tr>
                             <td>Bank Loan Payment</td>
-                            <td className="money">$0</td>
+                            <td className="money">$ TODO</td>
                         </tr>
                     </tbody>
                 </Table >
@@ -200,27 +220,27 @@ export default class PlayerSheet extends React.Component {
                 <tbody>
                     <tr>
                         <td>Home Mortgage</td>
-                        <td className="money">$32.00</td>
+                        <td className="money">$ TODO</td>
                     </tr>
                     <tr>
                         <td>School Loans</td>
-                        <td className="money">$0.00</td>
+                        <td className="money">$ TODO</td>
                     </tr>
                     <tr>
                         <td>Car Loans</td>
-                        <td className="money">$0.00</td>
+                        <td className="money">$ TODO</td>
                     </tr>
                     <tr>
                         <td>Credit Cards</td>
-                        <td className="money">$0.00</td>
+                        <td className="money">$ TODO</td>
                     </tr>
                     <tr>
                         <td>Retail Debt</td>
-                        <td className="money">$0.00</td>
+                        <td className="money">$ TODO</td>
                     </tr>
                     <tr>
                         <td>Bank Loan</td>
-                        <td className="money">$0.00</td>
+                        <td className="money">$ TODO</td>
                     </tr>
                 </tbody>
             </Table >
@@ -254,6 +274,9 @@ export default class PlayerSheet extends React.Component {
                 <Tab eventKey="expenses" title="Expenses">
                     {this.renderExpenses(profession)}
                 </Tab>
+                <Tab eventKey="liabilities" title="Liabilities">
+                    {this.renderLiabilities()}
+                </Tab>
                 <Tab eventKey="realEstate" title="Real Estate">
                     {this.renderRealEstate()}
                 </Tab>
@@ -262,9 +285,6 @@ export default class PlayerSheet extends React.Component {
                 </Tab>
                 <Tab eventKey="businesses" title="Businesses">
                     {this.renderBusinesses()}
-                </Tab>
-                <Tab eventKey="liabilities" title="Liabilities">
-                    {this.renderLiabilities()}
                 </Tab>
                 <Tab eventKey="actions" title="Actions">
                     {this.renderActions()}
