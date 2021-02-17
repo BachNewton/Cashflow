@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
-import Profession from './Profession';
+import Profession from '../utility/Profession';
 import WarningButton from './WarningButton';
 
 export default class Professions extends React.Component {
@@ -21,7 +21,7 @@ export default class Professions extends React.Component {
     render() {
         var cards = Profession.ALL.map((profession) => {
             return (
-                <Card style={{ width: '10rem', display: 'inline-block', margin: '0.25rem' }} key={profession.title}>
+                <Card style={{ width: '10rem', margin: '0.25rem' }} key={profession.title}>
                     <Card.Img variant="top" src={profession.image} />
                     <Card.Body>
                         <Card.Title>{profession.title}</Card.Title>
@@ -35,9 +35,12 @@ export default class Professions extends React.Component {
 
         return (
             <>
-                <WarningButton buttonText="Get Random Profession" title="Get a new Profession" details="Are you sure you want to get a new Profession? This will reset your Player Sheet." callback={this.getRandomProfession} />
-                <br />
-                {cards}
+                <div className="center">
+                    <WarningButton buttonText="Get Random Profession" title="Get a new Profession?" details="Are you sure you want to get a new Profession? This will reset your Player Sheet." callback={this.getRandomProfession} />
+                </div>
+                <div className="center">
+                    {cards}
+                </div>
             </>
         );
     }

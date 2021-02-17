@@ -1,0 +1,9 @@
+.money {
+    text-align: right;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}

@@ -5,7 +5,9 @@ import Container from 'react-bootstrap/Container';
 import './App.css';
 import Professions from './Professions';
 import PlayerSheet from './PlayerSheet';
-import Profession from './Profession';
+import Profession from '../utility/Profession';
+import Expenses from '../utility/Expenses';
+import Liabilities from '../utility/Liabilities';
 
 export default class App extends React.Component {
     constructor(props) {
@@ -16,7 +18,10 @@ export default class App extends React.Component {
 
         this.state = {
             hash: window.location.hash,
-            profession: new Profession()
+            profession: new Profession(),
+            expenses: new Expenses(),
+            liabilities: new Liabilities(),
+            savings: 0
         };
     }
 
@@ -26,10 +31,20 @@ export default class App extends React.Component {
         });
     }
 
-    handleNewProfession(profession) {
+    handleNewProfession(/** @type {Profession} */ profession) {
         var hash = '#playerSheet';
         window.history.pushState(null, '', '#playerSheet');
-        this.setState({ profession: profession, hash: hash });
+
+        var savings = profession.savings;
+        // var expenses = Object.assign({}, profession.expenses);
+        // var liabilities = Object.assign({}, profession.liabilities);
+        this.setState({
+            profession: profession,
+            hash: hash,
+            // expenses: expenses,
+            // liabilities: liabilities,
+            savings: savings
+        });
     }
 
     getProfession() {

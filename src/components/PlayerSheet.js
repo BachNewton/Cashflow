@@ -2,7 +2,7 @@ import React from 'react';
 import Table from 'react-bootstrap/Table';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
-import Profession from './Profession';
+import Profession from '../utility/Profession';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 
 export default class PlayerSheet extends React.Component {
@@ -29,7 +29,7 @@ export default class PlayerSheet extends React.Component {
                         </tr>
                     </tbody>
                 </Table>
-                <img src={profession.image} width='100%' alt="Profession" />
+                <img src={profession.image} alt="Profession" style={{ maxWidth: "25rem", width: "100%", marginLeft: "auto", marginRight: "auto", display: "block" }} />
             </Jumbotron>
         );
     }
@@ -210,7 +210,7 @@ export default class PlayerSheet extends React.Component {
         var profession = this.getProfession();
 
         return (
-            <Tabs defaultActiveKey="info" variant="tabs">
+            <Tabs fill defaultActiveKey="info" variant="tabs">
                 <Tab eventKey="info" title="Info">
                     {this.renderInfo(profession)}
                 </Tab>
