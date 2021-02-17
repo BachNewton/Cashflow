@@ -4,6 +4,8 @@ import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import Profession from '../utility/Profession';
 import Jumbotron from 'react-bootstrap/Jumbotron';
+import './PlayerSheet.css';
+import WarningButton from './WarningButton';
 
 export default class PlayerSheet extends React.Component {
     constructor(props) {
@@ -19,12 +21,12 @@ export default class PlayerSheet extends React.Component {
                 <Table striped bordered hover variant="dark">
                     <tbody>
                         <tr>
-                            <td>Salary</td>
-                            <td className="money">${profession.salary.toLocaleString()}</td>
-                        </tr>
-                        <tr>
                             <td>Savings</td>
                             <td className="money">${profession.savings.toLocaleString()}</td>
+                        </tr>
+                        <tr>
+                            <td>Children</td>
+                            <td>{profession.children}</td>
                         </tr>
                         <tr>
                             <td>Per Child Expense</td>
@@ -72,42 +74,42 @@ export default class PlayerSheet extends React.Component {
         );
     }
 
-    renderExpenses() {
+    renderExpenses(/** @type {Profession} */ profession) {
         return (
             <>
                 <Table striped bordered hover variant="dark">
                     <tbody>
                         <tr>
                             <td>Taxes</td>
-                            <td className="money">$0</td>
+                            <td className="money">${profession.expenses.tax.toLocaleString()}</td>
                         </tr>
                         <tr>
                             <td>Home Mortgage</td>
-                            <td className="money">$0</td>
+                            <td className="money">${profession.expenses.housing.toLocaleString()}</td>
                         </tr>
                         <tr>
                             <td>School Loan Payment</td>
-                            <td className="money">$0</td>
+                            <td className="money">${profession.expenses.school.toLocaleString()}</td>
                         </tr>
                         <tr>
                             <td>Car Payment</td>
-                            <td className="money">$0</td>
+                            <td className="money">${profession.expenses.car.toLocaleString()}</td>
                         </tr>
                         <tr>
                             <td>Credit Card Payment</td>
-                            <td className="money">$0</td>
+                            <td className="money">${profession.expenses.creditCard.toLocaleString()}</td>
                         </tr>
                         <tr>
                             <td>Retail Payment</td>
-                            <td className="money">$0</td>
+                            <td className="money">${profession.expenses.retail.toLocaleString()}</td>
                         </tr>
                         <tr>
                             <td>Other Expenses</td>
-                            <td className="money">$0</td>
+                            <td className="money">${profession.expenses.other.toLocaleString()}</td>
                         </tr>
                         <tr>
-                            <td>Child Expenses</td>
-                            <td className="money">$0</td>
+                            <td>Child Expenses (x{profession.children})</td>
+                            <td className="money">${(profession.children * profession.perChildExpense).toLocaleString()}</td>
                         </tr>
                         <tr>
                             <td>Bank Loan Payment</td>
@@ -209,6 +211,19 @@ export default class PlayerSheet extends React.Component {
         );
     }
 
+    renderActions() {
+        return (
+            <Jumbotron>
+                <WarningButton />
+                <WarningButton />
+                <WarningButton />
+                <WarningButton />
+                <WarningButton />
+                <WarningButton />
+            </Jumbotron>
+        );
+    }
+
     render() {
         var profession = this.getProfession() || new Profession();
 
@@ -221,7 +236,7 @@ export default class PlayerSheet extends React.Component {
                     {this.renderIncome(profession)}
                 </Tab>
                 <Tab eventKey="expenses" title="Expenses">
-                    {this.renderExpenses()}
+                    {this.renderExpenses(profession)}
                 </Tab>
                 <Tab eventKey="realEstate" title="Real Estate">
                     {this.renderRealEstate()}
@@ -234,6 +249,9 @@ export default class PlayerSheet extends React.Component {
                 </Tab>
                 <Tab eventKey="liabilities" title="Liabilities">
                     {this.renderLiabilities()}
+                </Tab>
+                <Tab eventKey="actions" title="Actions">
+                    {this.renderActions()}
                 </Tab>
             </Tabs>
         );

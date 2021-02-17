@@ -140,7 +140,7 @@ export default class Profession {
      * @param {{
      * title: string, salary: number, savings: number, perChildExpense: number,
      * expenses: Expenses, liabilities: Liabilities,
-     * image: string
+     * image: string, children: number
      * }} data 
      */
     constructor(data) {
@@ -153,6 +153,7 @@ export default class Profession {
         this.expenses = data.expenses || new Expenses();
         this.liabilities = data.liabilities || new Liabilities();
         this.image = data.image || professionImage;
+        this.children = data.children || 0;
     }
 
     clone() {
@@ -163,7 +164,8 @@ export default class Profession {
             perChildExpense: this.perChildExpense,
             expenses: this.expenses.clone(),
             liabilities: this.liabilities.clone(),
-            image: this.image
+            image: this.image,
+            children: this.children
         });
     }
 }

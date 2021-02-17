@@ -16,7 +16,7 @@ export default class App extends React.Component {
 
         this.state = {
             hash: window.location.hash,
-            profession: new Profession()
+            profession: Profession.ENGINEER // new Profession()
         };
     }
 
@@ -46,7 +46,7 @@ export default class App extends React.Component {
                 <Navbar.Brand>
                     <img
                         alt="Cashflow Icon"
-                        src="/icon.jpeg"
+                        src="/icon.png"
                         width="30"
                         className="d-inline-block align-top"
                     />{' '}

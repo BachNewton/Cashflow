@@ -36,7 +36,7 @@ export default class WarningButton extends React.Component {
     render() {
         return (
             <>
-                <Button onClick={this.handleOpen}>{this.buttonText}</Button>
+                <Button onClick={this.handleOpen} style={{ width: "100%", marginBottom: "0.5rem" }}>{this.buttonText}</Button>
 
                 <Modal centered show={this.state.show} onHide={this.handleClose}>
                     <Modal.Header closeButton>

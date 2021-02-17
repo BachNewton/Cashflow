@@ -35,9 +35,9 @@ export default class Professions extends React.Component {
 
         return (
             <>
-                <div className="center">
-                    <WarningButton buttonText="Get Random Profession" title="Get a new Profession?" details="Are you sure you want to get a new Profession? This will reset your Player Sheet." callback={this.getRandomProfession} />
-                </div>
+                {/* <div className="center"> */}
+                <WarningButton buttonText="Get Random Profession" title="Get a new Profession?" details="Are you sure you want to get a new Profession? This will reset your Player Sheet." callback={this.getRandomProfession} />
+                {/* </div> */}
                 <div className="center">
                     {cards}
                 </div>
