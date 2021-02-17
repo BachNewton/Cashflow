@@ -145,7 +145,9 @@ export default class Profession {
      * }} data 
      */
     constructor(data) {
-        this.title = data.title || '';
+        data = data || {};
+
+        this.title = data.title || 'Unemployed';
         this.salary = data.salary || 0;
         this.savings = data.savings || 0;
         this.perChildExpense = data.perChildExpense || 0;
