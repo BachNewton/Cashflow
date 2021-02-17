@@ -13,4 +13,14 @@ export default class Liabilities {
         this.creditCard = data.creditCard || 0;
         this.retail = data.retail || 0;
     }
+
+    clone() {
+        return new Liabilities({
+            housing: this.housing,
+            school: this.school,
+            car: this.car,
+            creditCard: this.creditCard,
+            retail: this.retail
+        });
+    }
 }

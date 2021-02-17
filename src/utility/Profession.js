@@ -154,4 +154,16 @@ export default class Profession {
         this.liabilities = data.liabilities || new Liabilities();
         this.image = data.image || professionImage;
     }
+
+    clone() {
+        return new Profession({
+            title: this.title,
+            salary: this.salary,
+            savings: this.savings,
+            perChildExpense: this.perChildExpense,
+            expenses: this.expenses.clone(),
+            liabilities: this.liabilities.clone(),
+            image: this.image
+        });
+    }
 }

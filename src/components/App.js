@@ -6,8 +6,6 @@ import './App.css';
 import Professions from './Professions';
 import PlayerSheet from './PlayerSheet';
 import Profession from '../utility/Profession';
-import Expenses from '../utility/Expenses';
-import Liabilities from '../utility/Liabilities';
 
 export default class App extends React.Component {
     constructor(props) {
@@ -18,10 +16,7 @@ export default class App extends React.Component {
 
         this.state = {
             hash: window.location.hash,
-            profession: new Profession(),
-            expenses: new Expenses(),
-            liabilities: new Liabilities(),
-            savings: 0
+            profession: new Profession()
         };
     }
 
@@ -35,15 +30,9 @@ export default class App extends React.Component {
         var hash = '#playerSheet';
         window.history.pushState(null, '', '#playerSheet');
 
-        var savings = profession.savings;
-        // var expenses = Object.assign({}, profession.expenses);
-        // var liabilities = Object.assign({}, profession.liabilities);
         this.setState({
-            profession: profession,
-            hash: hash,
-            // expenses: expenses,
-            // liabilities: liabilities,
-            savings: savings
+            profession: profession.clone(),
+            hash: hash
         });
     }
 
@@ -76,7 +65,7 @@ export default class App extends React.Component {
 
     renderBody() {
         if (this.state.hash === '' || this.state.hash === '#playerSheet') {
-            return <PlayerSheet getProfession={this.getProfession} />;
+            return <PlayerSheet getProfession={this.getProfession} getPlayerSheetData={this.getPlayerSheetData} />;
         } else {
             return <Professions handleNewProfession={this.handleNewProfession} />;
         }

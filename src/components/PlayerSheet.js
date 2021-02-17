@@ -9,8 +9,7 @@ export default class PlayerSheet extends React.Component {
     constructor(props) {
         super(props);
 
-        /** @type {func} */
-        this.getProfession = props.getProfession || new Profession();
+        this.getProfession = props.getProfession || function () { };
     }
 
     renderInfo(/** @type {Profession} */ profession) {
@@ -22,6 +21,10 @@ export default class PlayerSheet extends React.Component {
                         <tr>
                             <td>Salary</td>
                             <td className="money">${profession.salary.toLocaleString()}</td>
+                        </tr>
+                        <tr>
+                            <td>Savings</td>
+                            <td className="money">${profession.savings.toLocaleString()}</td>
                         </tr>
                         <tr>
                             <td>Per Child Expense</td>
@@ -45,7 +48,7 @@ export default class PlayerSheet extends React.Component {
                         </tr>
                         <tr>
                             <td>Dividends / Interest Income</td>
-                            <td className="money">$0.00</td>
+                            <td className="money">$35,863</td>
                         </tr>
                         <tr>
                             <td>Real Estate Total</td>
@@ -207,7 +210,7 @@ export default class PlayerSheet extends React.Component {
     }
 
     render() {
-        var profession = this.getProfession();
+        var profession = this.getProfession() || new Profession();
 
         return (
             <Tabs fill defaultActiveKey="info" variant="tabs">

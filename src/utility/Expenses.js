@@ -15,4 +15,16 @@ export default class Expenses {
         this.retail = data.retail || 0;
         this.other = data.other || 0;
     }
+
+    clone() {
+        return new Expenses({
+            tax: this.tax,
+            housing: this.housing,
+            school: this.school,
+            car: this.car,
+            creditCard: this.creditCard,
+            retail: this.retail,
+            other: this.other
+        });
+    }
 }
