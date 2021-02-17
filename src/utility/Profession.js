@@ -40,7 +40,6 @@ export default class Profession {
         expenses: new Expenses({
             tax: 2350,
             housing: 1330,
-            school: 0,
             car: 300,
             creditCard: 660,
             retail: 50,
@@ -48,7 +47,6 @@ export default class Profession {
         }),
         liabilities: new Liabilities({
             housing: 143000,
-            school: 0,
             car: 15000,
             creditCard: 22000,
             retail: 1000
@@ -64,7 +62,6 @@ export default class Profession {
         expenses: new Expenses({
             tax: 360,
             housing: 300,
-            school: 0,
             car: 60,
             creditCard: 60,
             retail: 50,
@@ -72,7 +69,6 @@ export default class Profession {
         }),
         liabilities: new Liabilities({
             housing: 31000,
-            school: 0,
             car: 3000,
             creditCard: 2000,
             retail: 1000
@@ -88,7 +84,6 @@ export default class Profession {
         expenses: new Expenses({
             tax: 280,
             housing: 200,
-            school: 0,
             car: 60,
             creditCard: 60,
             retail: 50,
@@ -96,7 +91,6 @@ export default class Profession {
         }),
         liabilities: new Liabilities({
             housing: 20000,
-            school: 0,
             car: 4000,
             creditCard: 2000,
             retail: 1000
