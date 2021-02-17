@@ -14,12 +14,28 @@ export default class PlayerSheet extends React.Component {
         this.getProfession = props.getProfession || function () { };
     }
 
+    getTotalIncome(/** @type {Profession} */ profession) {
+        // return profession.
+    }
+
+    getChildExpenses(/** @type {Profession} */ profession) {
+        return profession.children * profession.perChildExpense;
+    }
+
+    getTotalExpenses(/** @type {Profession} */ profession) {
+        return profession.expenses.tax + profession.expenses.housing + profession.expenses.car + profession.expenses.creditCard + profession.expenses.retail + profession.expenses.other + this.getChildExpenses(profession);
+    }
+
     renderInfo(/** @type {Profession} */ profession) {
         return (
             <Jumbotron>
                 <h1>{profession.title}</h1>
                 <Table striped bordered hover variant="dark">
                     <tbody>
+                        <tr>
+                            <td>Cashflow</td>
+                            <td className="money">$ TODO</td>
+                        </tr>
                         <tr>
                             <td>Savings</td>
                             <td className="money">${profession.savings.toLocaleString()}</td>
@@ -109,7 +125,7 @@ export default class PlayerSheet extends React.Component {
                         </tr>
                         <tr>
                             <td>Child Expenses (x{profession.children})</td>
-                            <td className="money">${(profession.children * profession.perChildExpense).toLocaleString()}</td>
+                            <td className="money">${this.getChildExpenses(profession).toLocaleString()}</td>
                         </tr>
                         <tr>
                             <td>Bank Loan Payment</td>
@@ -121,7 +137,7 @@ export default class PlayerSheet extends React.Component {
                     <tbody>
                         <tr>
                             <td>Total Expenses</td>
-                            <td className="money">$0</td>
+                            <td className="money">${this.getTotalExpenses(profession).toLocaleString()}</td>
                         </tr>
                     </tbody>
                 </Table>
