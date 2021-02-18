@@ -37,8 +37,12 @@ export default class PlayerSheet extends React.Component {
         return profession.realEstate.reduce((sum, realEstate) => sum + realEstate.cashflow, 0);
     }
 
+    getPassiveIncome(/** @type {Profession} */ profession) {
+        return this.getTotalBusinessIncome(profession) + this.getTotalRealEstateIncome(profession) + this.getTotalStockIncome(profession);
+    }
+
     getTotalIncome(/** @type {Profession} */ profession) {
-        return profession.salary + this.getTotalBusinessIncome(profession) + this.getTotalRealEstateIncome(profession) + this.getTotalStockIncome(profession);
+        return profession.salary + this.getPassiveIncome(profession);
     }
 
     getChildExpenses(/** @type {Profession} */ profession) {
@@ -109,7 +113,7 @@ export default class PlayerSheet extends React.Component {
                     <tbody>
                         <tr>
                             <td>Passive Income</td>
-                            <td className="money">$ TODO</td>
+                            <td className="money">${this.getPassiveIncome(profession).toLocaleString()}</td>
                         </tr>
                         <tr>
                             <td>Total Income</td>
