@@ -7,6 +7,7 @@ import Jumbotron from 'react-bootstrap/Jumbotron';
 import './PlayerSheet.css';
 import LiabilitiesTable from './LiabilitiesTable';
 import ActionsTab from './ActionsTab';
+import StocksTable from './StocksTable';
 
 export default class PlayerSheet extends React.Component {
     constructor(props) {
@@ -165,22 +166,6 @@ export default class PlayerSheet extends React.Component {
         );
     }
 
-    renderStocksMutalsCDs() {
-        return (
-            <Table striped bordered hover variant="dark">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Amount</th>
-                        <th>Income / Splits</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </Table>
-        );
-    }
-
     renderBusinesses() {
         return (
             <Table striped bordered hover variant="dark">
@@ -222,7 +207,7 @@ export default class PlayerSheet extends React.Component {
                     {this.renderRealEstate()}
                 </Tab>
                 <Tab eventKey="stocksMutalsCDs" title="Stocks / Mutal's / CDs">
-                    {this.renderStocksMutalsCDs()}
+                    <StocksTable getProfession={this.getProfession} />
                 </Tab>
                 <Tab eventKey="businesses" title="Businesses">
                     {this.renderBusinesses()}
