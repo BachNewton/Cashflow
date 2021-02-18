@@ -5,56 +5,24 @@ import Tab from 'react-bootstrap/Tab';
 import Profession from '../utility/Profession';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import './PlayerSheet.css';
-import WarningButton from './WarningButton';
-import Form from 'react-bootstrap/Form';
 import LiabilitiesTable from './LiabilitiesTable';
+import ActionsTab from './ActionsTab';
 
 export default class PlayerSheet extends React.Component {
     constructor(props) {
         super(props);
 
-        this.handlePaycheck = this.handlePaycheck.bind(this);
-        this.handleDoodad = this.handleDoodad.bind(this);
+        this.handleActionTaken = this.handleActionTaken.bind(this);
 
         this.state = {
             tab: 'info'
         };
 
-        this.getProfession = props.getProfession || function () { };
-
-        this.doodadForm = 0;
+        this.getProfession = props.getProfession || function () { return new Profession(); };
     }
 
-    getTotalStockIncome(/** @type {Profession} */ profession) {
-        return profession.stocks.reduce((sum, stock) => sum + (stock.income * stock.shares), 0);
-    }
-
-    getTotalBusinessIncome(/** @type {Profession} */ profession) {
-        return profession.businesses.reduce((sum, business) => sum + business.income, 0);
-    }
-
-    getTotalRealEstateIncome(/** @type {Profession} */ profession) {
-        return profession.realEstate.reduce((sum, realEstate) => sum + realEstate.cashflow, 0);
-    }
-
-    getPassiveIncome(/** @type {Profession} */ profession) {
-        return this.getTotalBusinessIncome(profession) + this.getTotalRealEstateIncome(profession) + this.getTotalStockIncome(profession);
-    }
-
-    getTotalIncome(/** @type {Profession} */ profession) {
-        return profession.salary + this.getPassiveIncome(profession);
-    }
-
-    getChildExpenses(/** @type {Profession} */ profession) {
-        return profession.children * profession.perChildExpense;
-    }
-
-    getTotalExpenses(/** @type {Profession} */ profession) {
-        return profession.expenses.tax + profession.expenses.housing + profession.expenses.car + profession.expenses.creditCard + profession.expenses.retail + profession.expenses.other + this.getChildExpenses(profession);
-    }
-
-    getCashflow(/** @type {Profession} */ profession) {
-        return this.getTotalIncome(profession) - this.getTotalExpenses(profession);
+    handleActionTaken() {
+        this.setState({ tab: 'info' });
     }
 
     renderInfo(/** @type {Profession} */ profession) {
@@ -65,7 +33,7 @@ export default class PlayerSheet extends React.Component {
                     <tbody>
                         <tr>
                             <td>Cashflow</td>
-                            <td className="money">${this.getCashflow(profession).toLocaleString()}</td>
+                            <td className="money">${profession.getCashflow().toLocaleString()}</td>
                         </tr>
                         <tr>
                             <td>Savings</td>
@@ -97,15 +65,15 @@ export default class PlayerSheet extends React.Component {
                         </tr>
                         <tr>
                             <td>Dividends / Interest Income</td>
-                            <td className="money">${this.getTotalStockIncome(profession).toLocaleString()}</td>
+                            <td className="money">${profession.getTotalStockIncome().toLocaleString()}</td>
                         </tr>
                         <tr>
                             <td>Real Estate Total</td>
-                            <td className="money">${this.getTotalRealEstateIncome(profession).toLocaleString()}</td>
+                            <td className="money">${profession.getTotalRealEstateIncome().toLocaleString()}</td>
                         </tr>
                         <tr>
                             <td>Business Total</td>
-                            <td className="money">${this.getTotalBusinessIncome(profession).toLocaleString()}</td>
+                            <td className="money">${profession.getTotalBusinessIncome().toLocaleString()}</td>
                         </tr>
                     </tbody>
                 </Table >
@@ -113,11 +81,11 @@ export default class PlayerSheet extends React.Component {
                     <tbody>
                         <tr>
                             <td>Passive Income</td>
-                            <td className="money">${this.getPassiveIncome(profession).toLocaleString()}</td>
+                            <td className="money">${profession.getPassiveIncome().toLocaleString()}</td>
                         </tr>
                         <tr>
                             <td>Total Income</td>
-                            <td className="money">${this.getTotalIncome(profession).toLocaleString()}</td>
+                            <td className="money">${profession.getTotalIncome().toLocaleString()}</td>
                         </tr>
                     </tbody>
                 </Table >
@@ -160,7 +128,7 @@ export default class PlayerSheet extends React.Component {
                         </tr>
                         <tr>
                             <td>Child Expenses (x{profession.children})</td>
-                            <td className="money">${this.getChildExpenses(profession).toLocaleString()}</td>
+                            <td className="money">${profession.getChildExpenses().toLocaleString()}</td>
                         </tr>
                         <tr>
                             <td>Bank Loan Payment</td>
@@ -172,7 +140,7 @@ export default class PlayerSheet extends React.Component {
                     <tbody>
                         <tr>
                             <td>Total Expenses</td>
-                            <td className="money">${this.getTotalExpenses(profession).toLocaleString()}</td>
+                            <td className="money">${profession.getTotalExpenses().toLocaleString()}</td>
                         </tr>
                     </tbody>
                 </Table>
@@ -229,49 +197,12 @@ export default class PlayerSheet extends React.Component {
         );
     }
 
-    handlePaycheck() {
-        var profession = this.getProfession();
-        profession.savings += this.getCashflow(profession);
-        this.setState({ tab: 'info' });
-    }
-
-    handleDoodad() {
-        if (this.doodadForm === '' || isNaN(this.doodadForm)) return;
-
-        var profession = this.getProfession();
-        profession.savings -= parseInt(this.doodadForm);
-        this.setState({ tab: 'info' });
-    }
-
-    getDoodadForm() {
-        return (
-            <Form>
-                <Form.Group>
-                    <Form.Label>Cost</Form.Label>
-                    <Form.Control type="number" placeholder="0" onChange={e => this.doodadForm = e.target.value} />
-                </Form.Group>
-            </Form>
-        );
-    }
-
-    renderActions() {
-        return (
-            <Jumbotron>
-                <WarningButton buttonText="Paycheck" title="Payday!" details="Are you sure you want to collect your paycheck?" callback={this.handlePaycheck} />
-                <WarningButton buttonText="Doodad" title="Buy a Doodad" details="Would you like to purchase a doodad?" form={this.getDoodadForm()} callback={this.handleDoodad} />
-                <WarningButton />
-                <WarningButton />
-                <WarningButton />
-            </Jumbotron>
-        );
-    }
-
     handleChangeTab(key) {
         this.setState({ tab: key });
     }
 
     render() {
-        var profession = this.getProfession() || new Profession();
+        var profession = this.getProfession();
 
         return (
             <Tabs fill variant="tabs" activeKey={this.state.tab} onSelect={(k) => this.handleChangeTab(k)}>
@@ -297,7 +228,7 @@ export default class PlayerSheet extends React.Component {
                     {this.renderBusinesses()}
                 </Tab>
                 <Tab eventKey="actions" title="Actions">
-                    {this.renderActions()}
+                    <ActionsTab actionTaken={this.handleActionTaken} getProfession={this.getProfession} />
                 </Tab>
             </Tabs>
         );

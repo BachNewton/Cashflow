@@ -163,6 +163,38 @@ export default class Profession {
         this.stocks = [];
     }
 
+    getChildExpenses() {
+        return this.children * this.perChildExpense;
+    }
+
+    getTotalExpenses() {
+        return this.expenses.tax + this.expenses.housing + this.expenses.car + this.expenses.creditCard + this.expenses.retail + this.expenses.other + this.getChildExpenses();
+    }
+
+    getTotalStockIncome() {
+        return this.stocks.reduce((sum, stock) => sum + (stock.income * stock.shares), 0);
+    }
+
+    getTotalBusinessIncome() {
+        return this.businesses.reduce((sum, business) => sum + business.income, 0);
+    }
+
+    getTotalRealEstateIncome() {
+        return this.realEstate.reduce((sum, realEstate) => sum + realEstate.cashflow, 0);
+    }
+
+    getPassiveIncome() {
+        return this.getTotalBusinessIncome() + this.getTotalRealEstateIncome() + this.getTotalStockIncome();
+    }
+
+    getTotalIncome() {
+        return this.salary + this.getPassiveIncome();
+    }
+
+    getCashflow() {
+        return this.getTotalIncome() - this.getTotalExpenses();
+    }
+
     clone() {
         return new Profession({
             title: this.title,
