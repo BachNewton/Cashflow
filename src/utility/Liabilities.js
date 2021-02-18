@@ -12,6 +12,8 @@ export default class Liabilities {
         this.car = data.car || 0;
         this.creditCard = data.creditCard || 0;
         this.retail = data.retail || 0;
+
+        this.bankLoan = 0;
     }
 
     clone() {

@@ -14,6 +14,8 @@ export default class Expenses {
         this.creditCard = data.creditCard || 0;
         this.retail = data.retail || 0;
         this.other = data.other || 0;
+
+        this.bankLoan = 0;
     }
 
     clone() {

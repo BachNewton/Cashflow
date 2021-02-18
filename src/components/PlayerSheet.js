@@ -132,7 +132,7 @@ export default class PlayerSheet extends React.Component {
                         </tr>
                         <tr>
                             <td>Bank Loan Payment</td>
-                            <td className="money">$ TODO</td>
+                            <td className="money">${profession.expenses.bankLoan.toLocaleString()}</td>
                         </tr>
                     </tbody>
                 </Table >

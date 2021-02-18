@@ -10,7 +10,9 @@ export default class ActionsTab extends React.Component {
 
         this.handlePaycheck = this.handlePaycheck.bind(this);
         this.handleDoodad = this.handleDoodad.bind(this);
+        this.handleBankLoan = this.handleBankLoan.bind(this);
 
+        /** @type {function(): Profession} */
         this.getProfession = props.getProfession || function () { return new Profession(); };
         this.actionTaken = props.actionTaken || function () { };
 
@@ -42,11 +44,20 @@ export default class ActionsTab extends React.Component {
         );
     }
 
+    handleBankLoan() {
+        var profession = this.getProfession();
+        profession.expenses.bankLoan += 100;
+        profession.liabilities.bankLoan += 1000;
+        profession.savings += 1000;
+        this.actionTaken();
+    }
+
     render() {
         return (
             <Jumbotron>
                 <WarningButton buttonText="Paycheck" title="Payday!" details="Are you sure you want to collect your paycheck?" callback={this.handlePaycheck} />
                 <WarningButton buttonText="Doodad" title="Buy a Doodad" details="Would you like to purchase a doodad?" form={this.getDoodadForm()} callback={this.handleDoodad} />
+                <WarningButton buttonText="Bank Loan" title="Take a Bank Loan" details="Would you like to take a $1,000 bank loan?" callback={this.handleBankLoan} />
             </Jumbotron>
         );
     }

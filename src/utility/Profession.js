@@ -168,7 +168,7 @@ export default class Profession {
     }
 
     getTotalExpenses() {
-        return this.expenses.tax + this.expenses.housing + this.expenses.car + this.expenses.creditCard + this.expenses.retail + this.expenses.other + this.getChildExpenses();
+        return this.expenses.tax + this.expenses.housing + this.expenses.car + this.expenses.creditCard + this.expenses.retail + this.expenses.other + this.getChildExpenses() + this.expenses.bankLoan;
     }
 
     getTotalStockIncome() {

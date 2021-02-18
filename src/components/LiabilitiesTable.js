@@ -7,6 +7,8 @@ export default class LiabilitiesTable extends React.Component {
     constructor(props) {
         super(props);
 
+        this.handlePayBankLoan = this.handlePayBankLoan.bind(this);
+
         this.getProfession = props.getProfession || function () { };
 
         this.keys = ['housing', 'school', 'car', 'creditCard', 'retail'];
@@ -30,6 +32,15 @@ export default class LiabilitiesTable extends React.Component {
         });
     }
 
+    handlePayBankLoan() {
+        /** @type {Profession} */
+        var profession = this.getProfession();
+        profession.savings -= 1000;
+        profession.expenses.bankLoan -= 100;
+        profession.liabilities.bankLoan -= 1000;
+        this.forceUpdate();
+    }
+
     render() {
         /** @type {Profession} */
         var profession = this.getProfession() || new Profession();
@@ -45,6 +56,15 @@ export default class LiabilitiesTable extends React.Component {
                 </tr>
             );
         }
+
+        // Bank Loan special case
+        rows.push(
+            <tr key={this.keys.length}>
+                <td>Bank Loan</td>
+                <td><WarningButton getEnabled={() => profession.liabilities.bankLoan > 0 && profession.savings >= 1000} buttonText="Pay" title="Pay Bank Loan" details="Are you sure you want to pay off $1,000 of your bank loan?" callback={this.handlePayBankLoan} /></td>
+                <td className="money">${profession.liabilities.bankLoan.toLocaleString()}</td>
+            </tr>
+        );
 
         return (
             <Table striped bordered hover variant="dark">
