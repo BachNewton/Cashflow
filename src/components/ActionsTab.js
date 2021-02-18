@@ -11,6 +11,7 @@ export default class ActionsTab extends React.Component {
         this.handlePaycheck = this.handlePaycheck.bind(this);
         this.handleDoodad = this.handleDoodad.bind(this);
         this.handleBankLoan = this.handleBankLoan.bind(this);
+        this.handleBaby = this.handleBaby.bind(this);
 
         /** @type {function(): Profession} */
         this.getProfession = props.getProfession || function () { return new Profession(); };
@@ -52,12 +53,21 @@ export default class ActionsTab extends React.Component {
         this.actionTaken();
     }
 
+    handleBaby() {
+        var profession = this.getProfession();
+        profession.children++;
+        this.actionTaken();
+    }
+
     render() {
+        var profession = this.getProfession();
+
         return (
             <Jumbotron>
                 <WarningButton buttonText="Paycheck" title="Payday!" details="Are you sure you want to collect your paycheck?" callback={this.handlePaycheck} />
                 <WarningButton buttonText="Doodad" title="Buy a Doodad" details="Would you like to purchase a doodad?" form={this.getDoodadForm()} callback={this.handleDoodad} />
                 <WarningButton buttonText="Bank Loan" title="Take a Bank Loan" details="Would you like to take a $1,000 bank loan?" callback={this.handleBankLoan} />
+                <WarningButton buttonText="Baby" title="Have a Baby" details="Are you sure you want to have a baby?" callback={this.handleBaby} getEnabled={() => profession.children < 3} />
             </Jumbotron>
         );
     }
