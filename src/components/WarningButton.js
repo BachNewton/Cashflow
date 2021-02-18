@@ -19,7 +19,7 @@ export default class WarningButton extends React.Component {
         this.details = props.details || 'Details';
         this.form = props.form || null;
         this.callback = props.callback || function () { };
-        this.enabled = props.enabled !== undefined ? props.enabled : true;
+        this.getEnabled = props.getEnabled || function () { return true; };
     }
 
     handleClose() {
@@ -38,7 +38,7 @@ export default class WarningButton extends React.Component {
     render() {
         return (
             <>
-                <Button onClick={this.handleOpen} style={{ width: "100%", marginBottom: "0.5rem" }} disabled={!this.enabled}>{this.buttonText}</Button>
+                <Button onClick={this.handleOpen} style={{ width: "100%", marginBottom: "0.5rem" }} disabled={!this.getEnabled()}>{this.buttonText}</Button>
 
                 <Modal centered show={this.state.show} onHide={this.handleClose}>
                     <Modal.Header closeButton>

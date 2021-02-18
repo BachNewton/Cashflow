@@ -7,67 +7,48 @@ export default class LiabilitiesTable extends React.Component {
     constructor(props) {
         super(props);
 
-        this.handlePayHome = this.handlePayHome.bind(this);
-
         this.getProfession = props.getProfession || function () { };
+
+        this.keys = ['housing', 'school', 'car', 'creditCard', 'retail'];
+        this.names = ['Home Mortgage', 'School Loans', 'Car Loans', 'Credit Cards', 'Retail Debt'];
+        this.canPay = this.keys.map((key) => {
+            return () => {
+                /** @type {Profession} */
+                var profession = this.getProfession();
+                return profession.liabilities[key] > 0 && profession.savings >= profession.liabilities[key];
+            };
+        });
+        this.handlePay = this.keys.map((key) => {
+            return () => {
+                /** @type {Profession} */
+                var profession = this.getProfession();
+                profession.savings -= profession.liabilities[key];
+                profession.expenses[key] = 0;
+                profession.liabilities[key] = 0;
+                this.forceUpdate();
+            };
+        });
     }
-
-    handlePayHome() {
-        /** @type {Profession} */
-        var profession = this.getProfession();
-
-        profession.savings -= profession.liabilities.housing;
-        profession.expenses.housing = 0;
-        profession.liabilities.housing = 0;
-        this.forceUpdate();
-    }
-
-    handlePaySchool() { }
-
-    handlePayCar() { }
-
-    handlePayCreditCards() { }
-
-    handlePayRetail() { }
 
     render() {
         /** @type {Profession} */
         var profession = this.getProfession() || new Profession();
 
+        var rows = [];
+
+        for (var i = 0; i < this.keys.length; i++) {
+            rows.push(
+                <tr key={i}>
+                    <td>{this.names[i]}</td>
+                    <td><WarningButton getEnabled={this.canPay[i]} buttonText="Pay" title={"Pay " + this.names[i]} details={"Are you sure you want to pay off the " + this.names[i] + "?"} callback={this.handlePay[i]} /></td>
+                    <td className="money">${profession.liabilities[this.keys[i]].toLocaleString()}</td>
+                </tr>
+            );
+        }
+
         return (
             <Table striped bordered hover variant="dark">
-                <tbody>
-                    <tr>
-                        <td>Home Mortgage</td>
-                        <td><WarningButton enabled={profession.liabilities.housing > 0 && profession.savings >= profession.liabilities.housing} buttonText="Pay" title="Pay Home Mortgage" details="Are you sure you want to pay off the Home Mortgage?" callback={this.handlePayHome} /></td>
-                        <td className="money">${profession.liabilities.housing.toLocaleString()}</td>
-                    </tr>
-                    <tr>
-                        <td>School Loans</td>
-                        <td><WarningButton buttonText="Pay" title="Pay Home Mortgage" details="Are you sure you want to pay off the Home Mortgage?" /></td>
-                        <td className="money">${profession.liabilities.school.toLocaleString()}</td>
-                    </tr>
-                    <tr>
-                        <td>Car Loans</td>
-                        <td><WarningButton buttonText="Pay" title="Pay Home Mortgage" details="Are you sure you want to pay off the Home Mortgage?" /></td>
-                        <td className="money">${profession.liabilities.car.toLocaleString()}</td>
-                    </tr>
-                    <tr>
-                        <td>Credit Cards</td>
-                        <td><WarningButton buttonText="Pay" title="Pay Home Mortgage" details="Are you sure you want to pay off the Home Mortgage?" /></td>
-                        <td className="money">${profession.liabilities.creditCard.toLocaleString()}</td>
-                    </tr>
-                    <tr>
-                        <td>Retail Debt</td>
-                        <td><WarningButton buttonText="Pay" title="Pay Home Mortgage" details="Are you sure you want to pay off the Home Mortgage?" /></td>
-                        <td className="money">${profession.liabilities.retail.toLocaleString()}</td>
-                    </tr>
-                    <tr>
-                        <td>Bank Loan</td>
-                        <td><WarningButton buttonText="Pay" title="Pay Home Mortgage" details="Are you sure you want to pay off the Home Mortgage?" /></td>
-                        <td className="money">$ TODO</td>
-                    </tr>
-                </tbody>
+                <tbody>{rows}</tbody>
             </Table >
         );
     }
