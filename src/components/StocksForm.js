@@ -9,6 +9,8 @@ export default class StocksForm extends React.Component {
 
         this.handleCostChange = this.handleCostChange.bind(this);
         this.handleUnitsChange = this.handleUnitsChange.bind(this);
+        this.handleFinalUnitsChange = this.handleFinalUnitsChange.bind(this);
+        this.handleNameChange = this.handleNameChange.bind(this);
 
         /** @type {function(): Profession} */
         this.getProfession = props.getProfession || function () { return new Profession(); };
@@ -19,29 +21,42 @@ export default class StocksForm extends React.Component {
             units: 0
         };
 
-        this.name = '';
+        this.name = 'NO NAME';
+    }
+
+    isCostValid() {
+        return this.state.cost !== '' && !isNaN(this.state.cost) && parseInt(this.state.cost) !== 0;
     }
 
     getMaxUnits(profession) {
-        if (this.state.cost === '' || isNaN(this.state.cost) || this.state.cost === 0) return 0;
-        return Math.floor(profession.savings / this.state.cost);
+        return this.isCostValid() ? Math.floor(profession.savings / this.state.cost) : 0;
+    }
+
+    handleNameChange(e) {
+        this.name = e.target.value;
+        this.sendUpdate();
     }
 
     handleCostChange(e) {
         this.setState({ cost: e.target.value, units: 0 });
-        this.dataUpdate({
-            name: this.name,
-            cost: 0,
-            units: 0
-        });
+        this.sendUpdate();
     }
 
     handleUnitsChange(e) {
         this.setState({ units: e.target.value });
+        this.sendUpdate();
+    }
+
+    handleFinalUnitsChange(e) {
+        this.setState({ units: e.target.value });
+        this.sendUpdate();
+    }
+
+    sendUpdate() {
         this.dataUpdate({
             name: this.name,
-            cost: 0,
-            units: 0
+            cost: parseInt(this.state.cost),
+            units: parseInt(this.state.units)
         });
     }
 
@@ -56,7 +71,7 @@ export default class StocksForm extends React.Component {
             <Form>
                 <Form.Group>
                     <Form.Label>Name</Form.Label>
-                    <Form.Control type="text" placeholder="ABC" onChange={e => this.name = e.target.value} />
+                    <Form.Control type="text" placeholder="ABC" onChange={this.handleNameChange} />
                 </Form.Group>
                 <Form.Group>
                     <Form.Label>Cost per Unit</Form.Label>
@@ -67,10 +82,12 @@ export default class StocksForm extends React.Component {
                     <RangeSlider
                         value={this.state.units}
                         onChange={this.handleUnitsChange}
+                        onAfterChange={this.handleFinalUnitsChange}
                         tooltipPlacement="top"
-                        tooltip="on"
+                        tooltip={this.isCostValid() ? "on" : "off"}
                         min={0}
                         max={this.getMaxUnits(profession)}
+                        disabled={!this.isCostValid()}
                     />
                 </Form.Group>
                 <Form.Group>
