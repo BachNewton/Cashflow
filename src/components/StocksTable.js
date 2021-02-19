@@ -66,14 +66,13 @@ export default class StocksTable extends React.Component {
         var stocks = profession.stocks.map((stock) => (
             <tr key={stock.key}>
                 <td>{stock.name}</td>
-                <td className="money">${stock.cost.toLocaleString()}</td>
                 <td>{stock.units}</td>
                 <td className="money">${stock.income.toLocaleString()}</td>
                 <td onClick={() => this.lastClickedStock = stock}>
                     <WarningButton
                         buttonText="Sell"
                         title={"Sell " + stock.name}
-                        details={"Would you like to sell your " + stock.units + " units of " + stock.name + "?"}
+                        details={"Would you like to sell your " + stock.units + " units of " + stock.name + "? You originally purchased them for $" + stock.cost.toLocaleString() + " per unit."}
                         callback={this.handleSellStock}
                         form={this.sellForm}
                     />
@@ -95,7 +94,6 @@ export default class StocksTable extends React.Component {
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Price per Share</th>
                             <th>Units</th>
                             <th>Income</th>
                         </tr>
