@@ -172,7 +172,7 @@ export default class Profession {
     }
 
     getTotalStockIncome() {
-        return this.stocks.reduce((sum, stock) => sum + (stock.income * stock.shares), 0);
+        return this.stocks.reduce((sum, stock) => sum + (stock.income * stock.units), 0);
     }
 
     getTotalBusinessIncome() {
