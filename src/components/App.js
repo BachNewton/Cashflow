@@ -46,7 +46,7 @@ export default class App extends React.Component {
                 <Navbar.Brand>
                     <img
                         alt="Cashflow Icon"
-                        src="/icon.png"
+                        src="/cashflowIcon512.png"
                         width="30"
                         className="d-inline-block align-top"
                     />{' '}
