@@ -4,6 +4,8 @@ import janitorImage from '../images/janitor.png';
 import mechanicImage from '../images/mechanic.png';
 import nurseImage from '../images/nurse.png';
 import pilotImage from '../images/pilot.png';
+import businessManagerImage from '../images/businessManager.png';
+import lawyerImage from '../images/lawyer.png';
 import Expenses from './Expenses';
 import Liabilities from './Liabilities';
 // eslint-disable-next-line
@@ -14,6 +16,54 @@ import Business from './Business';
 import Stock from './Stock';
 
 export default class Profession {
+    static LAWYER = new Profession({
+        title: 'Lawyer',
+        salary: 7500,
+        savings: 400,
+        perChildExpense: 380,
+        expenses: new Expenses({
+            tax: 1830,
+            housing: 1100,
+            school: 390,
+            car: 220,
+            creditCard: 180,
+            retail: 50,
+            other: 1650
+        }),
+        liabilities: new Liabilities({
+            housing: 115000,
+            school: 78000,
+            car: 11000,
+            creditCard: 6000,
+            retail: 1000
+        }),
+        image: lawyerImage
+    });
+
+    static BUSINESS_MANAGER = new Profession({
+        title: 'Business Manager',
+        salary: 4600,
+        savings: 400,
+        perChildExpense: 240,
+        expenses: new Expenses({
+            tax: 910,
+            housing: 700,
+            school: 60,
+            car: 120,
+            creditCard: 90,
+            retail: 50,
+            other: 1000
+        }),
+        liabilities: new Liabilities({
+            housing: 75000,
+            school: 12000,
+            car: 6000,
+            creditCard: 3000,
+            retail: 1000
+        }),
+        image: businessManagerImage
+    });
+
     static ENGINEER = new Profession({
         title: 'Engineer',
         salary: 4900,
@@ -133,7 +183,9 @@ export default class Profession {
         Profession.AIRLINE_PIOLT,
         Profession.MECHANIC,
         Profession.JANITOR,
-        Profession.NURSE
+        Profession.NURSE,
+        Profession.BUSINESS_MANAGER,
+        Profession.LAWYER
     ];
 
     /**
