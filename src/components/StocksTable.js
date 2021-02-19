@@ -5,6 +5,7 @@ import StocksForm from './StocksForm';
 import Stock from '../utility/Stock';
 // eslint-disable-next-line
 import Profession from '../utility/Profession';
+import Form from 'react-bootstrap/Form';
 
 export default class StocksTable extends React.Component {
     constructor(props) {
@@ -12,10 +13,22 @@ export default class StocksTable extends React.Component {
 
         this.handleYesButton = this.handleYesButton.bind(this);
         this.handleFormUpdate = this.handleFormUpdate.bind(this);
+        this.handleSellStock = this.handleSellStock.bind(this);
 
         /** @type {function(): Profession} */
         this.getProfession = props.getProfession;
         this.formData = null;
+        this.lastClickedStock = null;
+
+        this.sellCost = 0;
+        this.sellForm = (
+            <Form>
+                <Form.Group>
+                    <Form.Label>Selling Price</Form.Label>
+                    <Form.Control type="number" placeholder="0" onChange={e => this.sellCost = e.target.value} />
+                </Form.Group>
+            </Form>
+        );
     }
 
     handleFormUpdate(data) {
@@ -23,7 +36,7 @@ export default class StocksTable extends React.Component {
     }
 
     handleYesButton() {
-        if (this.formData === null) return;
+        if (this.formData === null || this.formData.units === 0) return;
 
         var stock = new Stock({
             name: this.formData.name,
@@ -37,6 +50,17 @@ export default class StocksTable extends React.Component {
         this.forceUpdate();
     }
 
+    handleSellStock() {
+        if (this.sellCost === '') return;
+
+        this.sellCost = parseInt(this.sellCost);
+        var profession = this.getProfession();
+        profession.savings += this.sellCost * this.lastClickedStock.units;
+        var index = profession.stocks.indexOf(this.lastClickedStock);
+        profession.stocks.splice(index, 1);
+        this.forceUpdate();
+    }
+
     render() {
         var profession = this.getProfession();
         var stocks = profession.stocks.map((stock) => (
@@ -45,6 +69,15 @@ export default class StocksTable extends React.Component {
                 <td className="money">${stock.cost.toLocaleString()}</td>
                 <td>{stock.units}</td>
                 <td className="money">${stock.income.toLocaleString()}</td>
+                <td onClick={() => this.lastClickedStock = stock}>
+                    <WarningButton
+                        buttonText="Sell"
+                        title={"Sell " + stock.name}
+                        details={"Would you like to sell your " + stock.units + " units of " + stock.name + "?"}
+                        callback={this.handleSellStock}
+                        form={this.sellForm}
+                    />
+                </td>
             </tr>
         ));
 

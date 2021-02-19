@@ -19,7 +19,15 @@ export default class ActionsTab extends React.Component {
         this.getProfession = props.getProfession || function () { return new Profession(); };
         this.actionTaken = props.actionTaken || function () { };
 
-        this.doodadForm = 0;
+        this.doodadCost = 0;
+        this.doodadForm = (
+            <Form>
+                <Form.Group>
+                    <Form.Label>Cost</Form.Label>
+                    <Form.Control type="number" placeholder="0" onChange={e => this.doodadCost = e.target.value} />
+                </Form.Group>
+            </Form>
+        );
     }
 
     handlePaycheck() {
@@ -29,10 +37,10 @@ export default class ActionsTab extends React.Component {
     }
 
     handleDoodad() {
-        if (this.doodadForm === '' || isNaN(this.doodadForm)) return;
+        if (this.doodadCost === '') return;
 
         var profession = this.getProfession();
-        profession.savings -= parseInt(this.doodadForm);
+        profession.savings -= parseInt(this.doodadCost);
         this.actionTaken();
     }
 
@@ -89,7 +97,7 @@ export default class ActionsTab extends React.Component {
         return (
             <Jumbotron>
                 <WarningButton buttonText="Paycheck" title="Payday!" details="Are you sure you want to collect your paycheck?" callback={this.handlePaycheck} />
-                <WarningButton buttonText="Doodad" title="Buy a Doodad" details="Would you like to purchase a doodad?" form={this.getDoodadForm()} callback={this.handleDoodad} />
+                <WarningButton buttonText="Doodad" title="Buy a Doodad" details="Would you like to purchase a doodad?" form={this.doodadForm} callback={this.handleDoodad} />
                 <WarningButton buttonText="Bank Loan" title="Take a Bank Loan" details="Would you like to take a $1,000 bank loan?" callback={this.handleBankLoan} />
                 <WarningButton buttonText="Baby" title="Have a Baby" details="Are you sure you want to have a baby?" callback={this.handleBaby} getEnabled={() => profession.children < 3} />
                 <WarningButton buttonText="Charity" title="Give to Charity" details={"Are you sure want to give 10% of your income to charity? That will cost $" + this.getCostOfCharity().toLocaleString() + "."} callback={this.handleCharity} />
