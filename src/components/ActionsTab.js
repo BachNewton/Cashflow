@@ -41,6 +41,7 @@ export default class ActionsTab extends React.Component {
 
         var profession = this.getProfession();
         profession.savings -= parseInt(this.doodadCost);
+        this.doodadCost = 0;
         this.actionTaken();
     }
 

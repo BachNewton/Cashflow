@@ -8,6 +8,7 @@ import './PlayerSheet.css';
 import LiabilitiesTable from './LiabilitiesTable';
 import ActionsTab from './ActionsTab';
 import StocksTable from './StocksTable';
+import RealEstateTable from './RealEstateTable';
 
 export default class PlayerSheet extends React.Component {
     constructor(props) {
@@ -149,23 +150,6 @@ export default class PlayerSheet extends React.Component {
         );
     }
 
-    renderRealEstate() {
-        return (
-            <Table striped bordered hover variant="dark">
-                <thead>
-                    <tr>
-                        <th>Type</th>
-                        <th>Cost</th>
-                        <th>Mortgage</th>
-                        <th>Cash Flow</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </Table>
-        );
-    }
-
     renderBusinesses() {
         return (
             <Table striped bordered hover variant="dark">
@@ -204,7 +188,7 @@ export default class PlayerSheet extends React.Component {
                     <LiabilitiesTable getProfession={this.getProfession} />
                 </Tab>
                 <Tab eventKey="realEstate" title="Real Estate">
-                    {this.renderRealEstate()}
+                    <RealEstateTable getProfession={this.getProfession} />
                 </Tab>
                 <Tab eventKey="stocksMutalsCDs" title="Stocks / Mutal's / CDs">
                     <StocksTable getProfession={this.getProfession} />

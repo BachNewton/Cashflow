@@ -90,7 +90,7 @@ export default class StocksTable extends React.Component {
                     callback={this.handleYesButton}
                 />
 
-                <Table striped bordered hover variant="dark">
+                <Table striped bordered hover variant="dark" size="sm">
                     <thead>
                         <tr>
                             <th>Name</th>
