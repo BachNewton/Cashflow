@@ -18,6 +18,7 @@ export default class ActionsTab extends React.Component {
         this.getDownsizeButtonDetails = this.getDownsizeButtonDetails.bind(this);
         this.getBankLoanButtonDetails = this.getBankLoanButtonDetails.bind(this);
         this.getRequiredBankLoan = this.getRequiredBankLoan.bind(this);
+        this.getPaycheckButtonDetails = this.getPaycheckButtonDetails.bind(this);
 
         /** @type {function(): Profession} */
         this.getProfession = props.getProfession || function () { return new Profession(); };
@@ -111,12 +112,17 @@ export default class ActionsTab extends React.Component {
         return "Would you like to take a $" + this.getRequiredBankLoan().toLocaleString() + " bank loan?";
     }
 
+    getPaycheckButtonDetails() {
+        var profession = this.getProfession();
+        return "Are you sure you want to collect your paycheck? Your current cashflow is $" + profession.getCashflow().toLocaleString() + ".";
+    }
+
     render() {
         var profession = this.getProfession();
 
         return (
             <Jumbotron>
-                <WarningButton buttonText="Paycheck" title="Payday!" details="Are you sure you want to collect your paycheck?" callback={this.handlePaycheck} />
+                <WarningButton buttonText="Paycheck" title="Payday!" details={this.getPaycheckButtonDetails} callback={this.handlePaycheck} />
                 <WarningButton buttonText="Doodad" title="Buy a Doodad" details="Would you like to purchase a doodad?" form={this.doodadForm} callback={this.handleDoodad} />
                 <WarningButton buttonText="Bank Loan" title="Take a Bank Loan" details={this.getBankLoanButtonDetails} callback={this.handleBankLoan} />
                 <WarningButton buttonText="Baby" title="Have a Baby" details="Are you sure you want to have a baby?" callback={this.handleBaby} getEnabled={() => profession.children < 3} />

@@ -3,4 +3,3 @@
 - Foreclosure button for real estate
 - Edit income for business
 - Add downpayment auto field to real estate
-- Show paycheck amount on button details
