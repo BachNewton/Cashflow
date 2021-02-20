@@ -5,6 +5,7 @@ import WarningButton from './WarningButton';
 import Profession from '../utility/Profession';
 import Form from 'react-bootstrap/Form';
 import Business from '../utility/Business';
+import MultiButton from './MultiButton';
 
 export default class BusinessesTable extends React.Component {
     constructor(props) {
@@ -12,6 +13,7 @@ export default class BusinessesTable extends React.Component {
 
         this.handleYesButton = this.handleYesButton.bind(this);
         this.handleSellBusiness = this.handleSellBusiness.bind(this);
+        this.handleUpdateIncome = this.handleUpdateIncome.bind(this);
         this.getBuyButtonDetails = this.getBuyButtonDetails.bind(this);
 
         /** @type {function(): Profession} */
@@ -24,6 +26,16 @@ export default class BusinessesTable extends React.Component {
                 <Form.Group>
                     <Form.Label>Selling Price</Form.Label>
                     <Form.Control type="number" placeholder="0" onChange={e => this.sellPrice = e.target.value} />
+                </Form.Group>
+            </Form>
+        );
+
+        this.updatedIncome = 0;
+        this.updateIncomeForm = (
+            <Form onSubmit={(e) => e.preventDefault()}>
+                <Form.Group>
+                    <Form.Label>New Income</Form.Label>
+                    <Form.Control type="number" placeholder="0" onChange={e => this.updatedIncome = e.target.value} />
                 </Form.Group>
             </Form>
         );
@@ -82,15 +94,28 @@ export default class BusinessesTable extends React.Component {
         profession.savings += this.sellPrice - this.lastClickedBusiness.liability;
         var index = profession.businesses.indexOf(this.lastClickedBusiness);
         profession.businesses.splice(index, 1);
-
         this.sellPrice = 0;
+        this.forceUpdate();
+    }
 
+    handleUpdateIncome() {
+        if (this.updatedIncome === '') return;
+
+        this.updatedIncome = parseInt(this.updatedIncome);
+        this.lastClickedBusiness.income = this.updatedIncome;
+        this.updatedIncome = 0;
         this.forceUpdate();
     }
 
     getBuyButtonDetails() {
         var profession = this.getProfession();
         return "Would you like to buy? You have $" + profession.savings.toLocaleString() + " in savings.";
+    }
+
+    getActionsButtonDetails(business) {
+        return () => {
+            return "What would you like to do with " + business.name + "? You placed a down payment of $" + business.downPayment.toLocaleString() + " and it's giving you an income of $" + business.income.toLocaleString() + ".";
+        };
     }
 
     render() {
@@ -101,12 +126,26 @@ export default class BusinessesTable extends React.Component {
                 <td className="money">${business.income.toLocaleString()}</td>
                 <td className="money">${business.liability.toLocaleString()}</td>
                 <td onClick={() => this.lastClickedBusiness = business}>
-                    <WarningButton
-                        buttonText="Sell"
-                        title={"Sell " + business.name}
-                        details={"Would you like to sell " + business.name + "?"}
-                        callback={this.handleSellBusiness}
-                        form={this.sellForm}
+                    <MultiButton
+                        buttonText="Actions"
+                        title={business.name + "'s Actions and Info"}
+                        details={this.getActionsButtonDetails(business)}
+                        buttons={[
+                            <WarningButton
+                                buttonText="Sell"
+                                title={"Sell " + business.name}
+                                details={"Would you like to sell " + business.name + "? You originally purchased it for $" + (business.liability + business.downPayment).toLocaleString() + "."}
+                                callback={this.handleSellBusiness}
+                                form={this.sellForm}
+                            />,
+                            <WarningButton
+                                buttonText="Update Income"
+                                title={"Update " + business.name + "'s Income"}
+                                details={"Would you like to update " + business.name + "'s income?"}
+                                callback={this.handleUpdateIncome}
+                                form={this.updateIncomeForm}
+                            />
+                        ]}
                     />
                 </td>
             </tr>

@@ -1,4 +1,3 @@
 - Undo button
 - Log of actions
-- Edit income for business
 - Add downpayment auto field to real estate
