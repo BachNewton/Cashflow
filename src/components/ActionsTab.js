@@ -84,7 +84,8 @@ export default class ActionsTab extends React.Component {
     }
 
     getCharityButtonDetails() {
-        return "Are you sure want to give 10% of your income to charity? That will cost $" + this.getCostOfCharity().toLocaleString() + ".";
+        var profession = this.getProfession();
+        return "Are you sure want to give 10% of your income to charity? That will cost $" + this.getCostOfCharity().toLocaleString() + ". You currently have $" + profession.savings.toLocaleString() + " in savings.";
     }
 
     getDownsizeButtonDetails() {
