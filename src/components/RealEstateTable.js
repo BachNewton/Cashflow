@@ -20,7 +20,7 @@ export default class RealEstateTable extends React.Component {
 
         this.sellPricePerUnit = 0;
         this.sellForm = (
-            <Form>
+            <Form onSubmit={(e) => e.preventDefault()}>
                 <Form.Group>
                     <Form.Label>Selling Price per Unit</Form.Label>
                     <Form.Control type="number" placeholder="0" onChange={e => this.sellPricePerUnit = e.target.value} />
@@ -33,7 +33,7 @@ export default class RealEstateTable extends React.Component {
         this.buyMortgage = 0;
         this.buyCashflow = 0;
         this.buyForm = (
-            <Form>
+            <Form onSubmit={(e) => e.preventDefault()}>
                 <Form.Group>
                     <Form.Label>Type</Form.Label>
                     <Form.Control as="select" onChange={e => this.buyType = e.target.value}>

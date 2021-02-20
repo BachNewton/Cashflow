@@ -22,7 +22,7 @@ export default class StocksTable extends React.Component {
 
         this.sellCost = 0;
         this.sellForm = (
-            <Form>
+            <Form onSubmit={(e) => e.preventDefault()}>
                 <Form.Group>
                     <Form.Label>Selling Price</Form.Label>
                     <Form.Control type="number" placeholder="0" onChange={e => this.sellCost = e.target.value} />

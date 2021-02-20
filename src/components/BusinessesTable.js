@@ -20,7 +20,7 @@ export default class BusinessesTable extends React.Component {
 
         this.sellPrice = 0;
         this.sellForm = (
-            <Form>
+            <Form onSubmit={(e) => e.preventDefault()}>
                 <Form.Group>
                     <Form.Label>Selling Price</Form.Label>
                     <Form.Control type="number" placeholder="0" onChange={e => this.sellPrice = e.target.value} />
@@ -33,7 +33,7 @@ export default class BusinessesTable extends React.Component {
         this.buyLiability = 0;
         this.buyIncome = 0;
         this.buyForm = (
-            <Form>
+            <Form onSubmit={(e) => e.preventDefault()}>
                 <Form.Group>
                     <Form.Label>Name</Form.Label>
                     <Form.Control type="text" placeholder="Widgets Factory" onChange={e => this.buyName = e.target.value} />
@@ -50,7 +50,7 @@ export default class BusinessesTable extends React.Component {
                     <Form.Label>Income</Form.Label>
                     <Form.Control type="number" placeholder="0" onChange={e => this.buyIncome = e.target.value} />
                 </Form.Group>
-            </Form >
+            </Form>
         );
     }
 

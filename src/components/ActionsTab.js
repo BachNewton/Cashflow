@@ -23,7 +23,7 @@ export default class ActionsTab extends React.Component {
 
         this.doodadCost = 0;
         this.doodadForm = (
-            <Form>
+            <Form onSubmit={(e) => e.preventDefault()}>
                 <Form.Group>
                     <Form.Label>Cost</Form.Label>
                     <Form.Control type="number" placeholder="0" onChange={e => this.doodadCost = e.target.value} />
@@ -45,17 +45,6 @@ export default class ActionsTab extends React.Component {
         profession.savings -= parseInt(this.doodadCost);
         this.doodadCost = 0;
         this.actionTaken();
-    }
-
-    getDoodadForm() {
-        return (
-            <Form>
-                <Form.Group>
-                    <Form.Label>Cost</Form.Label>
-                    <Form.Control type="number" placeholder="0" onChange={e => this.doodadForm = e.target.value} />
-                </Form.Group>
-            </Form>
-        );
     }
 
     handleBankLoan() {

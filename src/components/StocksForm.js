@@ -76,7 +76,7 @@ export default class StocksForm extends React.Component {
         var profession = this.getProfession();
 
         return (
-            <Form>
+            <Form onSubmit={(e) => e.preventDefault()}>
                 <Form.Group>
                     <Form.Label>Name</Form.Label>
                     <Form.Control type="text" placeholder="ABC" onChange={this.handleNameChange} />
