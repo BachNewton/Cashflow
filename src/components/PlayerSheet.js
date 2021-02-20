@@ -8,6 +8,7 @@ import LiabilitiesTable from './LiabilitiesTable';
 import ActionsTab from './ActionsTab';
 import StocksTable from './StocksTable';
 import RealEstateTable from './RealEstateTable';
+import BusinessesTable from './BusinessesTable';
 
 export default class PlayerSheet extends React.Component {
     constructor(props) {
@@ -149,22 +150,6 @@ export default class PlayerSheet extends React.Component {
         );
     }
 
-    renderBusinesses() {
-        return (
-            <Table striped bordered hover variant="dark">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Income</th>
-                        <th>Liability</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </Table>
-        );
-    }
-
     handleChangeTab(key) {
         this.setState({ tab: key });
     }
@@ -193,7 +178,7 @@ export default class PlayerSheet extends React.Component {
                     <StocksTable getProfession={this.getProfession} />
                 </Tab>
                 <Tab eventKey="businesses" title="Businesses">
-                    {this.renderBusinesses()}
+                    <BusinessesTable getProfession={this.getProfession} />
                 </Tab>
                 <Tab eventKey="actions" title="Actions">
                     <ActionsTab actionTaken={this.handleActionTaken} getProfession={this.getProfession} />
