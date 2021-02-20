@@ -16,6 +16,8 @@ export default class ActionsTab extends React.Component {
         this.handleDownsize = this.handleDownsize.bind(this);
         this.getCharityButtonDetails = this.getCharityButtonDetails.bind(this);
         this.getDownsizeButtonDetails = this.getDownsizeButtonDetails.bind(this);
+        this.getBankLoanButtonDetails = this.getBankLoanButtonDetails.bind(this);
+        this.getRequiredBankLoan = this.getRequiredBankLoan.bind(this);
 
         /** @type {function(): Profession} */
         this.getProfession = props.getProfession || function () { return new Profession(); };
@@ -47,11 +49,24 @@ export default class ActionsTab extends React.Component {
         this.actionTaken();
     }
 
+    getRequiredBankLoan() {
+        var profession = this.getProfession();
+
+        var bankLoans = 1;
+        if (profession.savings < 0) {
+            bankLoans = Math.trunc(profession.savings / -1000);
+            bankLoans += profession.savings % 1000 === 0 ? 0 : 1;
+        }
+
+        return 1000 * bankLoans;
+    }
+
     handleBankLoan() {
         var profession = this.getProfession();
-        profession.expenses.bankLoan += 100;
-        profession.liabilities.bankLoan += 1000;
-        profession.savings += 1000;
+        var bankLoan = this.getRequiredBankLoan();
+        profession.expenses.bankLoan += 0.1 * bankLoan;
+        profession.liabilities.bankLoan += bankLoan;
+        profession.savings += bankLoan;
         this.actionTaken();
     }
 
@@ -92,6 +107,10 @@ export default class ActionsTab extends React.Component {
         return "Are you sure you want to pay for an entire month of expenses? It will cost $" + this.getCostOfDownsize().toLocaleString() + ".";
     }
 
+    getBankLoanButtonDetails() {
+        return "Would you like to take a $" + this.getRequiredBankLoan().toLocaleString() + " bank loan?";
+    }
+
     render() {
         var profession = this.getProfession();
 
@@ -99,7 +118,7 @@ export default class ActionsTab extends React.Component {
             <Jumbotron>
                 <WarningButton buttonText="Paycheck" title="Payday!" details="Are you sure you want to collect your paycheck?" callback={this.handlePaycheck} />
                 <WarningButton buttonText="Doodad" title="Buy a Doodad" details="Would you like to purchase a doodad?" form={this.doodadForm} callback={this.handleDoodad} />
-                <WarningButton buttonText="Bank Loan" title="Take a Bank Loan" details="Would you like to take a $1,000 bank loan?" callback={this.handleBankLoan} />
+                <WarningButton buttonText="Bank Loan" title="Take a Bank Loan" details={this.getBankLoanButtonDetails} callback={this.handleBankLoan} />
                 <WarningButton buttonText="Baby" title="Have a Baby" details="Are you sure you want to have a baby?" callback={this.handleBaby} getEnabled={() => profession.children < 3} />
                 <WarningButton buttonText="Charity" title="Give to Charity" details={this.getCharityButtonDetails} callback={this.handleCharity} />
                 <WarningButton buttonText="Downsized" title="Downsize" details={this.getDownsizeButtonDetails} callback={this.handleDownsize} />
