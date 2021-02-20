@@ -1,12 +1,14 @@
 import professionImage from '../images/profession.png';
 import engineerImage from '../images/engineer.png';
-import janitorImage from '../images/janitor.png';
+import janitorImage from '../images/janitor.webp';
 import mechanicImage from '../images/mechanic.png';
-import nurseImage from '../images/nurse.png';
+import nurseImage from '../images/nurse.webp';
 import pilotImage from '../images/pilot.png';
 import businessManagerImage from '../images/businessManager.png';
 import lawyerImage from '../images/lawyer.png';
 import secretaryImage from '../images/secretary.png';
+import doctorImage from '../images/doctor.png';
+import teacherImage from '../images/teacher.png';
 import Expenses from './Expenses';
 import Liabilities from './Liabilities';
 // eslint-disable-next-line
@@ -17,6 +19,54 @@ import Business from './Business';
 import Stock from './Stock';
 
 export default class Profession {
+    static TEACHER = new Profession({
+        title: 'Teacher',
+        salary: 3300,
+        savings: 400,
+        perChildExpense: 180,
+        expenses: new Expenses({
+            tax: 630,
+            housing: 500,
+            school: 60,
+            car: 100,
+            creditCard: 90,
+            retail: 50,
+            other: 760
+        }),
+        liabilities: new Liabilities({
+            housing: 50000,
+            school: 12000,
+            car: 5000,
+            creditCard: 3000,
+            retail: 1000
+        }),
+        image: teacherImage
+    });
+
+    static DOCTOR = new Profession({
+        title: 'Doctor',
+        salary: 13200,
+        savings: 400,
+        perChildExpense: 640,
+        expenses: new Expenses({
+            tax: 3420,
+            housing: 1900,
+            school: 750,
+            car: 750,
+            creditCard: 380,
+            retail: 50,
+            other: 2880
+        }),
+        liabilities: new Liabilities({
+            housing: 202000,
+            school: 150000,
+            car: 19000,
+            creditCard: 9000,
+            retail: 1000
+        }),
+        image: doctorImage
+    });
+
     static SECRETARY = new Profession({
         title: 'Secretary',
         salary: 2500,
@@ -209,7 +259,9 @@ export default class Profession {
         Profession.NURSE,
         Profession.BUSINESS_MANAGER,
         Profession.LAWYER,
-        Profession.SECRETARY
+        Profession.SECRETARY,
+        Profession.DOCTOR,
+        Profession.TEACHER
     ];
 
     /**
