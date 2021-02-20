@@ -1,5 +1,4 @@
 - Undo button
 - Log of actions
-- Foreclosure button for real estate
 - Edit income for business
 - Add downpayment auto field to real estate

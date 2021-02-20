@@ -5,6 +5,7 @@ import WarningButton from './WarningButton';
 import Profession from '../utility/Profession';
 import Form from 'react-bootstrap/Form';
 import RealEstate from '../utility/RealEstate';
+import MultiButton from './MultiButton';
 
 export default class RealEstateTable extends React.Component {
     constructor(props) {
@@ -12,6 +13,7 @@ export default class RealEstateTable extends React.Component {
 
         this.handleYesButton = this.handleYesButton.bind(this);
         this.handleSellRealEstate = this.handleSellRealEstate.bind(this);
+        this.handleForecloseRealEstate = this.handleForecloseRealEstate.bind(this);
         this.getBuyButtonDetails = this.getBuyButtonDetails.bind(this);
 
         /** @type {function(): Profession} */
@@ -101,6 +103,13 @@ export default class RealEstateTable extends React.Component {
         this.forceUpdate();
     }
 
+    handleForecloseRealEstate() {
+        var profession = this.getProfession();
+        var index = profession.realEstate.indexOf(this.lastClickedRealEstate);
+        profession.realEstate.splice(index, 1);
+        this.forceUpdate();
+    }
+
     getBuyButtonDetails() {
         var profession = this.getProfession();
         return "Would you like to buy? You have $" + profession.savings.toLocaleString() + " in savings.";
@@ -112,15 +121,29 @@ export default class RealEstateTable extends React.Component {
             <tr key={realEstate.key}>
                 <td>{realEstate.type}</td>
                 <td className="money">${realEstate.cost.toLocaleString()}</td>
-                <td className="money">${realEstate.mortgage.toLocaleString()}</td>
                 <td className="money">${realEstate.cashflow.toLocaleString()}</td>
                 <td onClick={() => this.lastClickedRealEstate = realEstate}>
-                    <WarningButton
-                        buttonText="Sell"
-                        title={"Sell " + realEstate.type}
-                        details={"Would you like to sell your " + realEstate.type + "?"}
-                        callback={this.handleSellRealEstate}
-                        form={this.sellForm}
+                    <MultiButton
+                        buttonText="Actions"
+                        title={"Your " + realEstate.type}
+                        details={"What woud you like to do with your " + realEstate.type + "? Your originally purchased it at $" + realEstate.cost.toLocaleString() + ". With a down payment of $" + (realEstate.cost - realEstate.mortgage).toLocaleString() + ". You have a morgage of $" + realEstate.mortgage.toLocaleString() + "."}
+                        buttons={[
+                            <WarningButton
+                                key="1"
+                                buttonText="Sell"
+                                title={"Sell " + realEstate.type}
+                                details={"Would you like to sell your " + realEstate.type + "?"}
+                                callback={this.handleSellRealEstate}
+                                form={this.sellForm}
+                            />,
+                            <WarningButton
+                                key="2"
+                                buttonText="Foreclose"
+                                title={"Foreclosure on your " + realEstate.type}
+                                details={"Would you like to foreclose your " + realEstate.type + "? The bank will claim this property for $" + realEstate.mortgage.toLocaleString() + "."}
+                                callback={this.handleForecloseRealEstate}
+                            />
+                        ]}
                     />
                 </td>
             </tr>
@@ -141,7 +164,6 @@ export default class RealEstateTable extends React.Component {
                         <tr>
                             <th>Type</th>
                             <th>Cost</th>
-                            <th>Mortgage</th>
                             <th>Cashflow</th>
                         </tr>
                     </thead>

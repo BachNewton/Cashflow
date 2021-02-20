@@ -95,7 +95,7 @@ export default class StocksTable extends React.Component {
 
     getActionsButtonDetails(stock) {
         return () => {
-            return "You own " + stock.units.toLocaleString() + " units at $" + stock.cost.toLocaleString() + " per unit.";
+            return "You own " + stock.units.toLocaleString() + " units of " + stock.name + " at $" + stock.cost.toLocaleString() + " per unit.";
         };
     }
 
