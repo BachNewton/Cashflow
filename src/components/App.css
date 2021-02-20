@@ -2,6 +2,10 @@
     text-align: right;
 }
 
+.align-right {
+    text-align: right;
+}
+
 .center {
     display: flex;
     justify-content: center;

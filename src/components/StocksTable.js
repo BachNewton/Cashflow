@@ -41,7 +41,8 @@ export default class StocksTable extends React.Component {
         var stock = new Stock({
             name: this.formData.name,
             cost: this.formData.cost,
-            units: this.formData.units
+            units: this.formData.units,
+            income: this.formData.income
         });
 
         var profession = this.getProfession();
@@ -66,7 +67,7 @@ export default class StocksTable extends React.Component {
         var stocks = profession.stocks.map((stock) => (
             <tr key={stock.key}>
                 <td>{stock.name}</td>
-                <td>{stock.units}</td>
+                <td className="align-right">{stock.units.toLocaleString()}</td>
                 <td className="money">${stock.income.toLocaleString()}</td>
                 <td onClick={() => this.lastClickedStock = stock}>
                     <WarningButton

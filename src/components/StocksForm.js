@@ -11,6 +11,7 @@ export default class StocksForm extends React.Component {
         this.handleUnitsChange = this.handleUnitsChange.bind(this);
         this.handleFinalUnitsChange = this.handleFinalUnitsChange.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleIncomeChange = this.handleIncomeChange.bind(this);
 
         /** @type {function(): Profession} */
         this.getProfession = props.getProfession || function () { return new Profession(); };
@@ -22,6 +23,7 @@ export default class StocksForm extends React.Component {
         };
 
         this.name = 'NO NAME';
+        this.income = 0;
     }
 
     isCostValid() {
@@ -34,6 +36,11 @@ export default class StocksForm extends React.Component {
 
     handleNameChange(e) {
         this.name = e.target.value;
+        this.sendUpdate();
+    }
+
+    handleIncomeChange(e) {
+        this.income = e.target.value;
         this.sendUpdate();
     }
 
@@ -56,7 +63,8 @@ export default class StocksForm extends React.Component {
         this.dataUpdate({
             name: this.name,
             cost: parseInt(this.state.cost),
-            units: parseInt(this.state.units)
+            units: parseInt(this.state.units),
+            income: this.income === '' ? 0 : parseInt(this.income)
         });
     }
 
@@ -89,6 +97,10 @@ export default class StocksForm extends React.Component {
                         max={this.getMaxUnits(profession)}
                         disabled={!this.isCostValid()}
                     />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Income</Form.Label>
+                    <Form.Control type="number" placeholder="0" onChange={this.handleIncomeChange} />
                 </Form.Group>
                 <Form.Group>
                     <Form.Label>Total Cost: ${this.getTotalCost().toLocaleString()}</Form.Label>

@@ -4,7 +4,6 @@ import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import Profession from '../utility/Profession';
 import Jumbotron from 'react-bootstrap/Jumbotron';
-import './PlayerSheet.css';
 import LiabilitiesTable from './LiabilitiesTable';
 import ActionsTab from './ActionsTab';
 import StocksTable from './StocksTable';
@@ -43,7 +42,7 @@ export default class PlayerSheet extends React.Component {
                         </tr>
                         <tr>
                             <td>Children</td>
-                            <td>{profession.children}</td>
+                            <td className="align-right">{profession.children}</td>
                         </tr>
                         <tr>
                             <td>Per Child Expense</td>
