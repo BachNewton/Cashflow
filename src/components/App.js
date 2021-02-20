@@ -16,7 +16,7 @@ export default class App extends React.Component {
 
         this.state = {
             hash: window.location.hash,
-            profession: Profession.ENGINEER // new Profession()
+            profession: new Profession()
         };
     }
 

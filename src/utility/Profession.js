@@ -6,6 +6,7 @@ import nurseImage from '../images/nurse.png';
 import pilotImage from '../images/pilot.png';
 import businessManagerImage from '../images/businessManager.png';
 import lawyerImage from '../images/lawyer.png';
+import secretaryImage from '../images/secretary.png';
 import Expenses from './Expenses';
 import Liabilities from './Liabilities';
 // eslint-disable-next-line
@@ -16,6 +17,28 @@ import Business from './Business';
 import Stock from './Stock';
 
 export default class Profession {
+    static SECRETARY = new Profession({
+        title: 'Secretary',
+        salary: 2500,
+        savings: 710,
+        perChildExpense: 140,
+        expenses: new Expenses({
+            tax: 460,
+            housing: 400,
+            car: 80,
+            creditCard: 60,
+            retail: 50,
+            other: 570
+        }),
+        liabilities: new Liabilities({
+            housing: 38000,
+            car: 4000,
+            creditCard: 2000,
+            retail: 1000
+        }),
+        image: secretaryImage
+    });
+
     static LAWYER = new Profession({
         title: 'Lawyer',
         salary: 7500,
@@ -185,7 +208,8 @@ export default class Profession {
         Profession.JANITOR,
         Profession.NURSE,
         Profession.BUSINESS_MANAGER,
-        Profession.LAWYER
+        Profession.LAWYER,
+        Profession.SECRETARY
     ];
 
     /**
