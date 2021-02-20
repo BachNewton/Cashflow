@@ -12,6 +12,7 @@ export default class BusinessesTable extends React.Component {
 
         this.handleYesButton = this.handleYesButton.bind(this);
         this.handleSellBusiness = this.handleSellBusiness.bind(this);
+        this.getBuyButtonDetails = this.getBuyButtonDetails.bind(this);
 
         /** @type {function(): Profession} */
         this.getProfession = props.getProfession;
@@ -87,6 +88,11 @@ export default class BusinessesTable extends React.Component {
         this.forceUpdate();
     }
 
+    getBuyButtonDetails() {
+        var profession = this.getProfession();
+        return "Would you like to buy? You have $" + profession.savings.toLocaleString() + " in savings.";
+    }
+
     render() {
         var profession = this.getProfession();
         var businesses = profession.businesses.map((business) => (
@@ -111,7 +117,7 @@ export default class BusinessesTable extends React.Component {
                 <WarningButton
                     buttonText="Buy"
                     title="Buy Business"
-                    details={"Would you like to buy? You have $" + profession.savings.toLocaleString() + " in savings."}
+                    details={this.getBuyButtonDetails}
                     form={this.buyForm}
                     callback={this.handleYesButton}
                 />

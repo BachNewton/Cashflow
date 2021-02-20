@@ -45,7 +45,7 @@ export default class WarningButton extends React.Component {
                         <Modal.Title>{this.title}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <p>{this.details}</p>
+                        <p>{this.details instanceof Function ? this.details() : this.details}</p>
                         {this.form}
                     </Modal.Body>
                     <Modal.Footer>

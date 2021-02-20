@@ -12,6 +12,7 @@ export default class RealEstateTable extends React.Component {
 
         this.handleYesButton = this.handleYesButton.bind(this);
         this.handleSellRealEstate = this.handleSellRealEstate.bind(this);
+        this.getBuyButtonDetails = this.getBuyButtonDetails.bind(this);
 
         /** @type {function(): Profession} */
         this.getProfession = props.getProfession;
@@ -100,6 +101,11 @@ export default class RealEstateTable extends React.Component {
         this.forceUpdate();
     }
 
+    getBuyButtonDetails() {
+        var profession = this.getProfession();
+        return "Would you like to buy? You have $" + profession.savings.toLocaleString() + " in savings.";
+    }
+
     render() {
         var profession = this.getProfession();
         var realEstate = profession.realEstate.map((realEstate) => (
@@ -125,7 +131,7 @@ export default class RealEstateTable extends React.Component {
                 <WarningButton
                     buttonText="Buy"
                     title="Buy Real Estate"
-                    details={"Would you like to buy? You have $" + profession.savings.toLocaleString() + " in savings."}
+                    details={this.getBuyButtonDetails}
                     form={this.buyForm}
                     callback={this.handleYesButton}
                 />
