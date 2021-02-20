@@ -6,6 +6,7 @@ import Stock from '../utility/Stock';
 // eslint-disable-next-line
 import Profession from '../utility/Profession';
 import Form from 'react-bootstrap/Form';
+import MultiButton from './MultiButton';
 
 export default class StocksTable extends React.Component {
     constructor(props) {
@@ -14,6 +15,8 @@ export default class StocksTable extends React.Component {
         this.handleYesButton = this.handleYesButton.bind(this);
         this.handleFormUpdate = this.handleFormUpdate.bind(this);
         this.handleSellStock = this.handleSellStock.bind(this);
+        this.handleReverseSplit = this.handleReverseSplit.bind(this);
+        this.handleSplit = this.handleSplit.bind(this);
 
         /** @type {function(): Profession} */
         this.getProfession = props.getProfession;
@@ -62,6 +65,40 @@ export default class StocksTable extends React.Component {
         this.forceUpdate();
     }
 
+    handleReverseSplit() {
+        this.lastClickedStock.units = Math.floor(this.lastClickedStock.units / 2);
+        this.forceUpdate();
+    }
+
+    handleSplit() {
+        this.lastClickedStock.units *= 2;
+        this.forceUpdate();
+    }
+
+    getSellButtonDetails(stock) {
+        return () => {
+            return "Would you like to sell your " + stock.units.toLocaleString() + " units of " + stock.name + "? You originally purchased them for $" + stock.cost.toLocaleString() + " per unit.";
+        };
+    }
+
+    getReverseSplitButtonDetails(stock) {
+        return () => {
+            return "Would you like to reverse split your shares of " + stock.name + "? Your shares after a reverse split will be " + (Math.floor(stock.units / 2)).toLocaleString() + ".";
+        };
+    }
+
+    getSplitButtonDetails(stock) {
+        return () => {
+            return "Would you like to split your shares of " + stock.name + "? Your shares after a split will be " + (stock.units * 2).toLocaleString() + ".";
+        };
+    }
+
+    getActionsButtonDetails(stock) {
+        return () => {
+            return "You own " + stock.units.toLocaleString() + " units at $" + stock.cost.toLocaleString() + " per unit.";
+        };
+    }
+
     render() {
         var profession = this.getProfession();
         var stocks = profession.stocks.map((stock) => (
@@ -70,12 +107,34 @@ export default class StocksTable extends React.Component {
                 <td className="align-right">{stock.units.toLocaleString()}</td>
                 <td className="money">${stock.income.toLocaleString()}</td>
                 <td onClick={() => this.lastClickedStock = stock}>
-                    <WarningButton
-                        buttonText="Sell"
-                        title={"Sell " + stock.name}
-                        details={"Would you like to sell your " + stock.units + " units of " + stock.name + "? You originally purchased them for $" + stock.cost.toLocaleString() + " per unit."}
-                        callback={this.handleSellStock}
-                        form={this.sellForm}
+                    <MultiButton
+                        buttonText="Actions"
+                        title={stock.name + "'s Actions and Info"}
+                        details={this.getActionsButtonDetails(stock)}
+                        buttons={[
+                            <WarningButton
+                                key="1"
+                                buttonText="Sell"
+                                title={"Sell " + stock.name}
+                                details={this.getSellButtonDetails(stock)}
+                                callback={this.handleSellStock}
+                                form={this.sellForm}
+                            />,
+                            <WarningButton
+                                key="2"
+                                buttonText="Reverse Split (1 for 2)"
+                                title={"Reverse Split " + stock.name}
+                                details={this.getReverseSplitButtonDetails(stock)}
+                                callback={this.handleReverseSplit}
+                            />,
+                            <WarningButton
+                                key="3"
+                                buttonText="Split (2 for 1)"
+                                title={"Split " + stock.name}
+                                details={this.getSplitButtonDetails(stock)}
+                                callback={this.handleSplit}
+                            />
+                        ]}
                     />
                 </td>
             </tr>
