@@ -22,7 +22,7 @@ export default class StocksForm extends React.Component {
             units: 0
         };
 
-        this.name = 'NO NAME';
+        this.name = 'GRO4US';
         this.income = 0;
     }
 
@@ -79,7 +79,14 @@ export default class StocksForm extends React.Component {
             <Form onSubmit={(e) => e.preventDefault()}>
                 <Form.Group>
                     <Form.Label>Name</Form.Label>
-                    <Form.Control type="text" placeholder="ABC" onChange={this.handleNameChange} />
+                    <Form.Control as="select" onChange={this.handleNameChange}>
+                        <option>GRO4US</option>
+                        <option>MYT4U</option>
+                        <option>ON2U</option>
+                        <option>OK4U</option>
+                        <option>2BIG</option>
+                        <option>Certificate of Deposit</option>
+                    </Form.Control>
                 </Form.Group>
                 <Form.Group>
                     <Form.Label>Cost per Unit</Form.Label>
