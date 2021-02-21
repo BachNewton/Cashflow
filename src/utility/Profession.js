@@ -289,6 +289,9 @@ export default class Profession {
         this.businesses = [];
         /** @type {Array<Stock>} */
         this.stocks = [];
+
+        this.inRatRace = true;
+        this.cashflowGoal = null;
     }
 
     get savings() {
@@ -306,7 +309,7 @@ export default class Profession {
     }
 
     getTotalExpenses() {
-        return this.expenses.tax + this.expenses.housing + this.expenses.car + this.expenses.creditCard + this.expenses.retail + this.expenses.other + this.getChildExpenses() + this.expenses.bankLoan;
+        return this.inRatRace ? this.expenses.tax + this.expenses.housing + this.expenses.car + this.expenses.creditCard + this.expenses.retail + this.expenses.other + this.getChildExpenses() + this.expenses.bankLoan : 0;
     }
 
     getTotalStockIncome() {

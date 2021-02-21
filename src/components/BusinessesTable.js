@@ -132,6 +132,7 @@ export default class BusinessesTable extends React.Component {
                         details={this.getActionsButtonDetails(business)}
                         buttons={[
                             <WarningButton
+                                key="1"
                                 buttonText="Sell"
                                 title={"Sell " + business.name}
                                 details={"Would you like to sell " + business.name + "? You originally purchased it for $" + (business.liability + business.downPayment).toLocaleString() + "."}
@@ -139,6 +140,7 @@ export default class BusinessesTable extends React.Component {
                                 form={this.sellForm}
                             />,
                             <WarningButton
+                                key="2"
                                 buttonText="Update Income"
                                 title={"Update " + business.name + "'s Income"}
                                 details={"Would you like to update " + business.name + "'s income?"}
