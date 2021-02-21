@@ -172,11 +172,13 @@ export default class ActionsTab extends React.Component {
                 <div style={{ textAlign: "center", fontWeight: "bold", marginBottom: "1rem", fontSize: "1.5rem" }}>
                     Actions in <span style={{ color: "lime" }}>Fast Track</span>!
                 </div>
-                <WarningButton buttonText="Cashfow Day" title="FREE MONEY!" details={this.getCashflowDayButtonDetails} callback={this.handlePaycheck} />
-                <WarningButton buttonText="Charity" title="So Very Generous" details={this.getCharityButtonDetails} callback={this.handleCharity} getEnabled={this.canGiveToCharity} />
-                <WarningButton buttonText="Tax Audit" title="You've Been Audited" details="Are you sure you've been audited? That will cost you half of your entire savings." callback={this.handleLostHalfOfSavings} />
-                <WarningButton buttonText="Divorce" title="Not Meant To Be" details="Are you sure you want a divorce? That will cost you all of your savings." callback={this.handleLoseAllSavings} />
-                <WarningButton buttonText="Lawsuit" title="You've Been Sued" details="Are you sure you've been sued? That will cost you half of your entire savings." callback={this.handleLostHalfOfSavings} />
+                <div>
+                    <WarningButton buttonText="Cashfow Day" title="FREE MONEY!" details={this.getCashflowDayButtonDetails} callback={this.handlePaycheck} />
+                    <WarningButton buttonText="Charity" title="So Very Generous" details={this.getCharityButtonDetails} callback={this.handleCharity} getEnabled={this.canGiveToCharity} />
+                    <WarningButton buttonText="Tax Audit" title="You've Been Audited" details="Are you sure you've been audited? That will cost you half of your entire savings." callback={this.handleLostHalfOfSavings} />
+                    <WarningButton buttonText="Divorce" title="Not Meant To Be" details="Are you sure you want a divorce? That will cost you all of your savings." callback={this.handleLoseAllSavings} />
+                    <WarningButton buttonText="Lawsuit" title="You've Been Sued" details="Are you sure you've been sued? That will cost you half of your entire savings." callback={this.handleLostHalfOfSavings} />
+                </div>
             </Jumbotron>
         );
     }
