@@ -17,7 +17,7 @@ export default class ExpensesAndLiabilitiesTable extends React.Component {
             return () => {
                 /** @type {Profession} */
                 var profession = this.getProfession();
-                return profession.liabilities[key] > 0 && profession.savings >= profession.liabilities[key];
+                return profession.inRatRace && profession.liabilities[key] > 0 && profession.savings >= profession.liabilities[key];
             };
         });
         this.handlePay = this.keys.map((key) => {
@@ -74,7 +74,7 @@ export default class ExpensesAndLiabilitiesTable extends React.Component {
                 <td className="money">${profession.liabilities.bankLoan.toLocaleString()}</td>
                 <td>
                     <WarningButton
-                        getEnabled={() => profession.liabilities.bankLoan > 0 && profession.savings >= 1000}
+                        getEnabled={() => profession.inRatRace && profession.liabilities.bankLoan > 0 && profession.savings >= 1000}
                         buttonText="Pay"
                         title="Pay Bank Loan"
                         details="Are you sure you want to pay off $1,000 of your bank loan?"
@@ -84,8 +84,19 @@ export default class ExpensesAndLiabilitiesTable extends React.Component {
             </tr>
         );
 
+        var fastTrackRow = <></>;
+        if (!profession.inRatRace) {
+            fastTrackRow = (
+                <div style={{ textAlign: "center", fontWeight: "bold", marginTop: "1rem", marginBottom: "1rem", fontSize: "1.5rem" }}>
+                    Expenses and Liabilities are Ignored in the <span style={{ color: "lime" }}>Fast Track</span>!
+                </div>
+            );
+        }
+
         return (
             <>
+                {fastTrackRow}
+
                 <Table striped bordered hover variant="dark">
                     <thead>
                         <tr>

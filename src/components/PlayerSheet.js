@@ -88,7 +88,9 @@ export default class PlayerSheet extends React.Component {
 
         return (
             <tr>
-                <td colSpan="2" style={{ textAlign: "center" }}><span style={{ color: "lime" }}>YOU WIN!!</span></td>
+                <td colSpan="2" style={{ textAlign: "center" }}>
+                    <span style={{ color: "lime", fontWeight: "bold", fontSize: "1.5rem" }}>YOU WIN!!</span>
+                </td>
             </tr>
         );
     }
