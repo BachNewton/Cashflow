@@ -4,3 +4,4 @@
 - Add Paycheck button to income table
 - Bank loan prompt when savings in negative
 - You can leave rat race prompt
+- Liabilities is spelled wrong
