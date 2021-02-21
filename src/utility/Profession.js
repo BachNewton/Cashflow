@@ -276,7 +276,7 @@ export default class Profession {
 
         this.title = data.title || 'Unemployed';
         this.salary = data.salary || 0;
-        this.savings = data.savings || 0;
+        this._savings = data.savings || 0;
         this.perChildExpense = data.perChildExpense || 0;
         this.expenses = data.expenses || new Expenses();
         this.liabilities = data.liabilities || new Liabilities();
@@ -289,6 +289,16 @@ export default class Profession {
         this.businesses = [];
         /** @type {Array<Stock>} */
         this.stocks = [];
+    }
+
+    get savings() {
+        return this._savings;
+    }
+
+    // TODO: This can be used to create a log or an undo
+    set savings(number) {
+        // console.log('Setter was used');
+        this._savings = number;
     }
 
     getChildExpenses() {
