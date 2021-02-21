@@ -3,7 +3,7 @@ import Table from 'react-bootstrap/Table';
 import Profession from '../utility/Profession';
 import WarningButton from './WarningButton';
 
-export default class LiabilitiesTable extends React.Component {
+export default class ExpensesAndLiabilitiesTable extends React.Component {
     constructor(props) {
         super(props);
 
@@ -51,6 +51,8 @@ export default class LiabilitiesTable extends React.Component {
             rows.push(
                 <tr key={i}>
                     <td>{this.names[i]}</td>
+                    <td className="money">${profession.expenses[this.keys[i]].toLocaleString()}</td>
+                    <td className="money">${profession.liabilities[this.keys[i]].toLocaleString()}</td>
                     <td>
                         <WarningButton
                             getEnabled={this.canPay[i]}
@@ -60,7 +62,6 @@ export default class LiabilitiesTable extends React.Component {
                             callback={this.handlePay[i]}
                         />
                     </td>
-                    <td className="money">${profession.liabilities[this.keys[i]].toLocaleString()}</td>
                 </tr>
             );
         }
@@ -69,6 +70,8 @@ export default class LiabilitiesTable extends React.Component {
         rows.push(
             <tr key={this.keys.length}>
                 <td>Bank Loan</td>
+                <td className="money">${profession.expenses.bankLoan.toLocaleString()}</td>
+                <td className="money">${profession.liabilities.bankLoan.toLocaleString()}</td>
                 <td>
                     <WarningButton
                         getEnabled={() => profession.liabilities.bankLoan > 0 && profession.savings >= 1000}
@@ -78,14 +81,48 @@ export default class LiabilitiesTable extends React.Component {
                         callback={this.handlePayBankLoan}
                     />
                 </td>
-                <td className="money">${profession.liabilities.bankLoan.toLocaleString()}</td>
             </tr>
         );
 
         return (
-            <Table striped bordered hover variant="dark">
-                <tbody>{rows}</tbody>
-            </Table >
+            <>
+                <Table striped bordered hover variant="dark">
+                    <thead>
+                        <tr>
+                            <th>Debt</th>
+                            <th>Monthly Payment</th>
+                            <th>Liability</th>
+                        </tr>
+                    </thead>
+                    <tbody>{rows}</tbody>
+                </Table >
+
+                <Table striped bordered hover variant="dark">
+                    <tbody>
+                        <tr>
+                            <td>Taxes</td>
+                            <td className="money">${profession.expenses.tax.toLocaleString()}</td>
+                        </tr>
+                        <tr>
+                            <td>Other Expenses</td>
+                            <td className="money">${profession.expenses.other.toLocaleString()}</td>
+                        </tr>
+                        <tr>
+                            <td>Child Expenses (x{profession.children})</td>
+                            <td className="money">${profession.getChildExpenses().toLocaleString()}</td>
+                        </tr>
+                    </tbody>
+                </Table>
+
+                <Table striped bordered hover variant="dark">
+                    <tbody>
+                        <tr>
+                            <th>Total Expenses</th>
+                            <th className="money">${profession.getTotalExpenses().toLocaleString()}</th>
+                        </tr>
+                    </tbody>
+                </Table>
+            </>
         );
     }
 }

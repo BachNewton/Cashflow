@@ -3,7 +3,6 @@
 - Add downpayment auto field to real estate
 - Player can choose profession
 - Add Paycheck button to income table
-- Combine Expenses and Liabiies tables
 - Bank loan prompt when savings in negative
 - You can leave rat race prompt
 - Stock Name input should use dropdown

@@ -4,11 +4,11 @@ import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import Profession from '../utility/Profession';
 import Jumbotron from 'react-bootstrap/Jumbotron';
-import LiabilitiesTable from './LiabilitiesTable';
 import ActionsTab from './ActionsTab';
 import StocksTable from './StocksTable';
 import RealEstateTable from './RealEstateTable';
 import BusinessesTable from './BusinessesTable';
+import ExpensesAndLiabilitiesTable from './ExpensesAndLiabilitiesTable';
 
 export default class PlayerSheet extends React.Component {
     constructor(props) {
@@ -95,61 +95,6 @@ export default class PlayerSheet extends React.Component {
         );
     }
 
-    renderExpenses(/** @type {Profession} */ profession) {
-        return (
-            <>
-                <Table striped bordered hover variant="dark">
-                    <tbody>
-                        <tr>
-                            <td>Taxes</td>
-                            <td className="money">${profession.expenses.tax.toLocaleString()}</td>
-                        </tr>
-                        <tr>
-                            <td>Home Mortgage</td>
-                            <td className="money">${profession.expenses.housing.toLocaleString()}</td>
-                        </tr>
-                        <tr>
-                            <td>School Loan Payment</td>
-                            <td className="money">${profession.expenses.school.toLocaleString()}</td>
-                        </tr>
-                        <tr>
-                            <td>Car Payment</td>
-                            <td className="money">${profession.expenses.car.toLocaleString()}</td>
-                        </tr>
-                        <tr>
-                            <td>Credit Card Payment</td>
-                            <td className="money">${profession.expenses.creditCard.toLocaleString()}</td>
-                        </tr>
-                        <tr>
-                            <td>Retail Payment</td>
-                            <td className="money">${profession.expenses.retail.toLocaleString()}</td>
-                        </tr>
-                        <tr>
-                            <td>Other Expenses</td>
-                            <td className="money">${profession.expenses.other.toLocaleString()}</td>
-                        </tr>
-                        <tr>
-                            <td>Child Expenses (x{profession.children})</td>
-                            <td className="money">${profession.getChildExpenses().toLocaleString()}</td>
-                        </tr>
-                        <tr>
-                            <td>Bank Loan Payment</td>
-                            <td className="money">${profession.expenses.bankLoan.toLocaleString()}</td>
-                        </tr>
-                    </tbody>
-                </Table >
-                <Table striped bordered hover variant="dark">
-                    <tbody>
-                        <tr>
-                            <td>Total Expenses</td>
-                            <td className="money">${profession.getTotalExpenses().toLocaleString()}</td>
-                        </tr>
-                    </tbody>
-                </Table>
-            </>
-        );
-    }
-
     handleChangeTab(key) {
         this.setState({ tab: key });
     }
@@ -165,11 +110,8 @@ export default class PlayerSheet extends React.Component {
                 <Tab eventKey="income" title="Income">
                     {this.renderIncome(profession)}
                 </Tab>
-                <Tab eventKey="expenses" title="Expenses">
-                    {this.renderExpenses(profession)}
-                </Tab>
-                <Tab eventKey="liabilities" title="Liabilities">
-                    <LiabilitiesTable getProfession={this.getProfession} />
+                <Tab eventKey="expensesAndLiabilities" title="Expenses / Labilities">
+                    <ExpensesAndLiabilitiesTable getProfession={this.getProfession} />
                 </Tab>
                 <Tab eventKey="realEstate" title="Real Estate">
                     <RealEstateTable getProfession={this.getProfession} />
