@@ -6,6 +6,7 @@ import Profession from '../utility/Profession';
 import Form from 'react-bootstrap/Form';
 import RealEstate from '../utility/RealEstate';
 import MultiButton from './MultiButton';
+import RealEstateForm from './RealEstateForm';
 
 export default class RealEstateTable extends React.Component {
     constructor(props) {
@@ -15,10 +16,13 @@ export default class RealEstateTable extends React.Component {
         this.handleSellRealEstate = this.handleSellRealEstate.bind(this);
         this.handleForecloseRealEstate = this.handleForecloseRealEstate.bind(this);
         this.getBuyButtonDetails = this.getBuyButtonDetails.bind(this);
+        this.handleFormUpdate = this.handleFormUpdate.bind(this);
 
         /** @type {function(): Profession} */
         this.getProfession = props.getProfession;
         this.lastClickedRealEstate = null;
+
+        this.formData = null;
 
         this.sellPricePerUnit = 0;
         this.sellForm = (
@@ -29,61 +33,26 @@ export default class RealEstateTable extends React.Component {
                 </Form.Group>
             </Form>
         );
+    }
 
-        this.buyType = 'House 3Br/2Ba,1';
-        this.buyCost = 0;
-        this.buyMortgage = 0;
-        this.buyCashflow = 0;
-        this.buyForm = (
-            <Form onSubmit={(e) => e.preventDefault()}>
-                <Form.Group>
-                    <Form.Label>Type</Form.Label>
-                    <Form.Control as="select" onChange={e => this.buyType = e.target.value}>
-                        <option value={'House 3Br/2Ba,1'}>House 3Br/2Ba</option>
-                        <option value={'Condo 2Br/1Ba,1'}>Condo 2Br/1Ba</option>
-                        <option value={'10 Acres Land,1'}>10 Acres Land</option>
-                        <option value={'20 Acres Land,1'}>20 Acres Land</option>
-                        <option value={'Duplex,2'}>Duplex</option>
-                        <option value={'4-Plex,4'}>4-Plex</option>
-                        <option value={'8-Plex,8'}>8-Plex</option>
-                        <option value={'Apartment 12 Units,12'}>Apartment 12 Units</option>
-                        <option value={'Apartment 24 Units,24'}>Apartment 24 Units</option>
-                        <option value={'Apartment 60 Units,60'}>Apartment 60 Units</option>
-                    </Form.Control>
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Cost</Form.Label>
-                    <Form.Control type="number" placeholder="0" onChange={e => this.buyCost = e.target.value} />
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Mortgage</Form.Label>
-                    <Form.Control type="number" placeholder="0" onChange={e => this.buyMortgage = e.target.value} />
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Cashflow</Form.Label>
-                    <Form.Control type="number" placeholder="0" onChange={e => this.buyCashflow = e.target.value} />
-                </Form.Group>
-            </Form >
-        );
+    handleFormUpdate(data) {
+        this.formData = data;
     }
 
     handleYesButton() {
+        if (this.formData === null) return;
+
         var realEstate = new RealEstate({
-            type: this.buyType.split(',')[0],
-            units: parseInt(this.buyType.split(',')[1]),
-            cost: parseInt(this.buyCost),
-            mortgage: parseInt(this.buyMortgage),
-            cashflow: parseInt(this.buyCashflow)
+            type: this.formData.type.split(',')[0],
+            units: parseInt(this.formData.type.split(',')[1]),
+            cost: this.formData.cost,
+            mortgage: this.formData.cost - this.formData.downPayment,
+            cashflow: this.formData.cashflow
         });
 
         var profession = this.getProfession();
         profession.savings -= realEstate.cost - realEstate.mortgage;
         profession.realEstate.push(realEstate);
-
-        this.buyType = 'House 3Br/2Ba,1';
-        this.buyCost = 0;
-        this.buyMortgage = 0;
-        this.buyCashflow = 0;
 
         this.forceUpdate();
     }
@@ -155,7 +124,7 @@ export default class RealEstateTable extends React.Component {
                     buttonText="Buy"
                     title="Buy Real Estate"
                     details={this.getBuyButtonDetails}
-                    form={this.buyForm}
+                    form={<RealEstateForm getProfession={this.getProfession} dataUpdate={this.handleFormUpdate} />}
                     callback={this.handleYesButton}
                 />
 

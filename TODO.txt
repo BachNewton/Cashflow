@@ -1,6 +1,5 @@
 - Undo button
 - Log of actions
-- Add downpayment auto field to real estate
 - Player can choose profession
 - Add Paycheck button to income table
 - Bank loan prompt when savings in negative
