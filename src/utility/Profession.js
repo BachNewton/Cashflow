@@ -9,6 +9,8 @@ import lawyerImage from '../images/lawyer.png';
 import secretaryImage from '../images/secretary.png';
 import doctorImage from '../images/doctor.png';
 import teacherImage from '../images/teacher.png';
+import policeOfficerImage from '../images/policeOfficer.png';
+import truckDriverImage from '../images/truckDriver.png';
 import Expenses from './Expenses';
 import Liabilities from './Liabilities';
 // eslint-disable-next-line
@@ -19,6 +21,50 @@ import Business from './Business';
 import Stock from './Stock';
 
 export default class Profession {
+    static POLICE_OFFICER = new Profession({
+        title: 'Police Officer',
+        salary: 3000,
+        savings: 520,
+        perChildExpense: 160,
+        expenses: new Expenses({
+            tax: 580,
+            housing: 400,
+            car: 100,
+            creditCard: 60,
+            retail: 50,
+            other: 690
+        }),
+        liabilities: new Liabilities({
+            housing: 46000,
+            car: 5000,
+            creditCard: 2000,
+            retail: 1000
+        }),
+        image: policeOfficerImage
+    });
+
+    static TRUCK_DRIVER = new Profession({
+        title: 'Truck Driver',
+        salary: 2500,
+        savings: 750,
+        perChildExpense: 140,
+        expenses: new Expenses({
+            tax: 460,
+            housing: 400,
+            car: 80,
+            creditCard: 60,
+            retail: 50,
+            other: 570
+        }),
+        liabilities: new Liabilities({
+            housing: 38000,
+            car: 4000,
+            creditCard: 2000,
+            retail: 1000
+        }),
+        image: truckDriverImage
+    });
+
     static TEACHER = new Profession({
         title: 'Teacher',
         salary: 3300,
@@ -261,7 +307,9 @@ export default class Profession {
         Profession.LAWYER,
         Profession.SECRETARY,
         Profession.DOCTOR,
-        Profession.TEACHER
+        Profession.TEACHER,
+        Profession.POLICE_OFFICER,
+        Profession.TRUCK_DRIVER
     ];
 
     /**
