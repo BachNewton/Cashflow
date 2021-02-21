@@ -6,4 +6,3 @@
 - Bank loan prompt when savings in negative
 - You can leave rat race prompt
 - Stock Name input should use dropdown
-- Add passive income required for fast track to info table

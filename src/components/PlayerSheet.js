@@ -27,6 +27,16 @@ export default class PlayerSheet extends React.Component {
         this.setState({ tab: 'info' });
     }
 
+    renderPassiveIncomeUntilFastTrackCol(/** @type {Profession} */ profession) {
+        var passiveIncomeUntilFastTrack = profession.getPassiveIncomeUntilFastTrack();
+
+        if (passiveIncomeUntilFastTrack < 0) {
+            return <td style={{ color: "lime", textAlign: "center" }}>FAST TRACK</td>
+        }
+
+        return <td className="money">${passiveIncomeUntilFastTrack.toLocaleString()}</td>;
+    }
+
     renderInfo(/** @type {Profession} */ profession) {
         return (
             <Jumbotron>
@@ -40,6 +50,10 @@ export default class PlayerSheet extends React.Component {
                         <tr>
                             <td>Savings</td>
                             <td className="money">${profession.savings.toLocaleString()}</td>
+                        </tr>
+                        <tr>
+                            <td>Additional Passive Income required until Fast Track</td>
+                            {this.renderPassiveIncomeUntilFastTrackCol(profession)}
                         </tr>
                         <tr>
                             <td>Children</td>

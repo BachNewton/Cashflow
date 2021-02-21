@@ -333,6 +333,10 @@ export default class Profession {
         return this.getTotalIncome() - this.getTotalExpenses();
     }
 
+    getPassiveIncomeUntilFastTrack() {
+        return this.getTotalExpenses() - this.getPassiveIncome();
+    }
+
     clone() {
         return new Profession({
             title: this.title,
