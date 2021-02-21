@@ -15,6 +15,7 @@ export default class BusinessesTable extends React.Component {
         this.handleSellBusiness = this.handleSellBusiness.bind(this);
         this.handleUpdateIncome = this.handleUpdateIncome.bind(this);
         this.getBuyButtonDetails = this.getBuyButtonDetails.bind(this);
+        this.getBuyForm = this.getBuyForm.bind(this);
 
         /** @type {function(): Profession} */
         this.getProfession = props.getProfession;
@@ -44,26 +45,50 @@ export default class BusinessesTable extends React.Component {
         this.buyDownPayment = 0;
         this.buyLiability = 0;
         this.buyIncome = 0;
-        this.buyForm = (
-            <Form onSubmit={(e) => e.preventDefault()}>
-                <Form.Group>
-                    <Form.Label>Name</Form.Label>
-                    <Form.Control type="text" placeholder="Widgets Factory" onChange={e => this.buyName = e.target.value} />
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Down Payment</Form.Label>
-                    <Form.Control type="number" placeholder="0" onChange={e => this.buyDownPayment = e.target.value} />
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Liability</Form.Label>
-                    <Form.Control type="number" placeholder="0" onChange={e => this.buyLiability = e.target.value} />
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Income</Form.Label>
-                    <Form.Control type="number" placeholder="0" onChange={e => this.buyIncome = e.target.value} />
-                </Form.Group>
-            </Form>
-        );
+    }
+
+    getBuyForm(/** @type {Profession} */ profession) {
+        return () => {
+            if (profession.inRatRace) {
+                return (
+                    <Form onSubmit={(e) => e.preventDefault()}>
+                        <Form.Group>
+                            <Form.Label>Name</Form.Label>
+                            <Form.Control type="text" placeholder="Widgets Factory" onChange={e => this.buyName = e.target.value} />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Down Payment</Form.Label>
+                            <Form.Control type="number" placeholder="0" onChange={e => this.buyDownPayment = e.target.value} />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Liability</Form.Label>
+                            <Form.Control type="number" placeholder="0" onChange={e => this.buyLiability = e.target.value} />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Income</Form.Label>
+                            <Form.Control type="number" placeholder="0" onChange={e => this.buyIncome = e.target.value} />
+                        </Form.Group>
+                    </Form>
+                );
+            }
+
+            return (
+                <Form onSubmit={(e) => e.preventDefault()}>
+                    <Form.Group>
+                        <Form.Label>Name</Form.Label>
+                        <Form.Control type="text" placeholder="Widget Factories" onChange={e => this.buyName = e.target.value} />
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Down</Form.Label>
+                        <Form.Control type="number" placeholder="0" onChange={e => this.buyDownPayment = e.target.value} />
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Cashflow</Form.Label>
+                        <Form.Control type="number" placeholder="0" onChange={e => this.buyIncome = e.target.value} />
+                    </Form.Group>
+                </Form>
+            );
+        };
     }
 
     handleYesButton() {
@@ -159,7 +184,7 @@ export default class BusinessesTable extends React.Component {
                     buttonText="Buy"
                     title="Buy Business"
                     details={this.getBuyButtonDetails}
-                    form={this.buyForm}
+                    form={this.getBuyForm(profession)}
                     callback={this.handleYesButton}
                 />
 
