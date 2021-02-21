@@ -8,6 +8,7 @@ export default class Professions extends React.Component {
         super(props);
 
         this.getRandomProfession = this.getRandomProfession.bind(this);
+        this.chooseProfession = this.chooseProfession.bind(this);
 
         this.handleNewProfession = props.handleNewProfession || function () { };
     }
@@ -16,6 +17,12 @@ export default class Professions extends React.Component {
         var index = Math.floor(Math.random() * Profession.ALL.length);
         var profession = Profession.ALL[index];
         this.handleNewProfession(profession);
+    }
+
+    chooseProfession(profession) {
+        return () => {
+            return this.handleNewProfession(profession);
+        }
     }
 
     render() {
@@ -28,7 +35,14 @@ export default class Professions extends React.Component {
                         <Card.Text>
                             Salary: ${profession.salary.toLocaleString()}
                         </Card.Text>
+
                     </Card.Body>
+                    <WarningButton
+                        buttonText="Choose"
+                        title={"Choosing the " + profession.title}
+                        details={"Are you sure you want to choose the " + profession.title + "? This will reset your Player Sheet."}
+                        callback={this.chooseProfession(profession)}
+                    />
                 </Card>
             );
         });

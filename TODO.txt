@@ -1,5 +1,4 @@
 - Undo button
 - Log of actions
-- Player can choose profession
 - Add Paycheck button to income table
 - Bank loan prompt when savings in negative
